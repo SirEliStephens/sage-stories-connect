@@ -122,13 +122,13 @@ const About = () => {
             <div className="text-center">
               <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4">
                 <img 
-                  src="https://images.unsplash.com/photo-1580489944761-15a19d654956" 
-                  alt="Team Member" 
+                  src="/lovable-uploads/378b932b-754d-4c6b-a41f-e402554df23b.png" 
+                  alt="Eli Stephens" 
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="text-lg font-semibold">Sarah Johnson</h3>
-              <p className="text-sage-600">Co-Founder & CEO</p>
+              <h3 className="text-lg font-semibold">Eli Stephens</h3>
+              <p className="text-sage-600">Founder & CEO</p>
             </div>
             
             <div className="text-center">
