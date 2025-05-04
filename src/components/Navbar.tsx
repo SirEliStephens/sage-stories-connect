@@ -2,13 +2,19 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Helper function to check if the link is active
+  const isActive = (path: string) => {
+    return location.pathname === path;
   };
 
   return (
@@ -23,10 +29,30 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link to="/" className="text-gray-600 hover:text-sage-700 transition">Home</Link>
-          <Link to="/services" className="text-gray-600 hover:text-sage-700 transition">Services</Link>
-          <Link to="/about" className="text-gray-600 hover:text-sage-700 transition">About Us</Link>
-          <Link to="/contact" className="text-gray-600 hover:text-sage-700 transition">Contact</Link>
+          <Link 
+            to="/" 
+            className={`${isActive('/') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition`}
+          >
+            Home
+          </Link>
+          <Link 
+            to="/services" 
+            className={`${isActive('/services') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition`}
+          >
+            Services
+          </Link>
+          <Link 
+            to="/about" 
+            className={`${isActive('/about') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition`}
+          >
+            About Us
+          </Link>
+          <Link 
+            to="/contact" 
+            className={`${isActive('/contact') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition`}
+          >
+            Contact
+          </Link>
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
@@ -50,10 +76,34 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white absolute top-16 left-0 right-0 border-b border-gray-100 shadow-md z-50">
           <div className="container-custom py-4 flex flex-col space-y-4">
-            <Link to="/" className="text-gray-600 hover:text-sage-700 transition px-2 py-1">Home</Link>
-            <Link to="/services" className="text-gray-600 hover:text-sage-700 transition px-2 py-1">Services</Link>
-            <Link to="/about" className="text-gray-600 hover:text-sage-700 transition px-2 py-1">About Us</Link>
-            <Link to="/contact" className="text-gray-600 hover:text-sage-700 transition px-2 py-1">Contact</Link>
+            <Link 
+              to="/" 
+              className={`${isActive('/') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/services" 
+              className={`${isActive('/services') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Services
+            </Link>
+            <Link 
+              to="/about" 
+              className={`${isActive('/about') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About Us
+            </Link>
+            <Link 
+              to="/contact" 
+              className={`${isActive('/contact') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Link>
             <div className="flex flex-col space-y-2 pt-2">
               <Button variant="outline" className="border-sage-500 text-sage-700 hover:bg-sage-50 w-full">
                 Log In
