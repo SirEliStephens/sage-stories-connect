@@ -35,7 +35,7 @@ const featuredProfiles = [
     age: 24,
     location: 'Chicago, IL',
     image: 'https://images.unsplash.com/photo-1441057206919-63d19fac2369',
-    bio: 'Final year psychology student offering supportive conversation. I'm a great listener and genuinely interested in hearing your story.',
+    bio: 'Final year psychology student offering supportive conversation. I\'m a great listener and genuinely interested in hearing your story.',
     type: 'support' as const
   },
 ];
