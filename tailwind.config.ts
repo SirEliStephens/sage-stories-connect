@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -24,6 +25,32 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				sage: {
+					50: '#f4f7f4',
+					100: '#e6ede6',
+					200: '#d2dfd3',
+					300: '#b1cab3',
+					400: '#8aaf8d',
+					500: '#6a916d',
+					600: '#547656',
+					700: '#446048',
+					800: '#3a4e3d',
+					900: '#314235',
+					950: '#1a231c',
+				},
+				ocean: {
+					50: '#f0f9ff',
+					100: '#e0f2fe',
+					200: '#bae6fd',
+					300: '#7dd3fc',
+					400: '#38bdf8',
+					500: '#0ea5e9',
+					600: '#0284c7',
+					700: '#0369a1',
+					800: '#075985',
+					900: '#0c4a6e',
+					950: '#082f49',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -89,7 +116,11 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+			},
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				serif: ['Lora', 'serif'],
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
