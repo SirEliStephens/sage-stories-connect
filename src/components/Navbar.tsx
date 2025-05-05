@@ -22,8 +22,11 @@ const Navbar = () => {
       <div className="container-custom flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
-            <span className="text-xl font-serif font-semibold text-sage-700">SAGE</span>
-            <span className="text-xl font-bold text-ocean-600">+</span>
+            <img 
+              src="/lovable-uploads/3a4a88ef-7708-4bd2-9911-1587d82c2b8e.png" 
+              alt="SAGE+ Logo" 
+              className="h-8 mr-2" 
+            />
           </Link>
         </div>
 
