@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn, UserPlus } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
@@ -18,15 +18,19 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-100 py-4 sticky top-0 z-50">
-      <div className="container-custom flex justify-between items-center">
+    <nav className="bg-white border-b border-gray-100 py-4 sticky top-0 z-50 w-full">
+      <div className="container-custom flex justify-between items-center" style={{ width: "115%" }}>
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/3a4a88ef-7708-4bd2-9911-1587d82c2b8e.png" 
               alt="SAGE+ Logo" 
-              className="h-8 mr-2" 
+              className="h-10 mr-2" 
             />
+            <div className="flex items-center">
+              <span className="text-xl font-serif font-semibold text-sage-700">SAGE</span>
+              <span className="text-xl font-bold text-ocean-600">+</span>
+            </div>
           </Link>
         </div>
 
@@ -59,11 +63,16 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="outline" className="border-sage-500 text-sage-700 hover:bg-sage-50">
-            Log In
+          <Button 
+            variant="outline" 
+            className="border-sage-500 text-sage-700 hover:bg-sage-50 flex items-center gap-2"
+          >
+            <LogIn className="h-4 w-4" /> Log In
           </Button>
-          <Button className="bg-sage-600 hover:bg-sage-700 text-white">
-            Sign Up
+          <Button 
+            className="bg-sage-600 hover:bg-sage-700 text-white flex items-center gap-2"
+          >
+            <UserPlus className="h-4 w-4" /> Sign Up
           </Button>
         </div>
 
@@ -108,11 +117,16 @@ const Navbar = () => {
               Contact
             </Link>
             <div className="flex flex-col space-y-2 pt-2">
-              <Button variant="outline" className="border-sage-500 text-sage-700 hover:bg-sage-50 w-full">
-                Log In
+              <Button 
+                variant="outline" 
+                className="border-sage-500 text-sage-700 hover:bg-sage-50 w-full flex items-center justify-center gap-2"
+              >
+                <LogIn className="h-4 w-4" /> Log In
               </Button>
-              <Button className="bg-sage-600 hover:bg-sage-700 text-white w-full">
-                Sign Up
+              <Button 
+                className="bg-sage-600 hover:bg-sage-700 text-white w-full flex items-center justify-center gap-2"
+              >
+                <UserPlus className="h-4 w-4" /> Sign Up
               </Button>
             </div>
           </div>
