@@ -19,17 +19,17 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white border-b border-gray-100 py-4 sticky top-0 z-50 w-full">
-      <div className="container-custom flex justify-between items-center" style={{ width: "115%" }}>
+      <div className="container-custom flex justify-between items-center" style={{ width: "120%" }}>
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/3a4a88ef-7708-4bd2-9911-1587d82c2b8e.png" 
               alt="SAGE+ Logo" 
-              className="h-10 mr-2" 
+              className="h-12 mr-2" 
             />
             <div className="flex items-center">
-              <span className="text-xl font-serif font-semibold text-sage-700">SAGE</span>
-              <span className="text-xl font-bold text-ocean-600">+</span>
+              <span className="text-2xl font-serif font-semibold text-sage-700">SAGE</span>
+              <span className="text-2xl font-bold text-ocean-600">+</span>
             </div>
           </Link>
         </div>
@@ -49,6 +49,18 @@ const Navbar = () => {
             Services
           </Link>
           <Link 
+            to="/become-provider" 
+            className={`${isActive('/become-provider') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition`}
+          >
+            Become a Provider
+          </Link>
+          <Link 
+            to="/connect" 
+            className={`${isActive('/connect') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition`}
+          >
+            Connect
+          </Link>
+          <Link 
             to="/about" 
             className={`${isActive('/about') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition`}
           >
@@ -66,11 +78,13 @@ const Navbar = () => {
           <Button 
             variant="outline" 
             className="border-sage-500 text-sage-700 hover:bg-sage-50 flex items-center gap-2"
+            onClick={() => window.location.href = '/login'}
           >
             <LogIn className="h-4 w-4" /> Log In
           </Button>
           <Button 
             className="bg-sage-600 hover:bg-sage-700 text-white flex items-center gap-2"
+            onClick={() => window.location.href = '/signup'}
           >
             <UserPlus className="h-4 w-4" /> Sign Up
           </Button>
@@ -103,6 +117,20 @@ const Navbar = () => {
               Services
             </Link>
             <Link 
+              to="/become-provider" 
+              className={`${isActive('/become-provider') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Become a Provider
+            </Link>
+            <Link 
+              to="/connect" 
+              className={`${isActive('/connect') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Connect
+            </Link>
+            <Link 
               to="/about" 
               className={`${isActive('/about') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
               onClick={() => setIsMenuOpen(false)}
@@ -120,11 +148,13 @@ const Navbar = () => {
               <Button 
                 variant="outline" 
                 className="border-sage-500 text-sage-700 hover:bg-sage-50 w-full flex items-center justify-center gap-2"
+                onClick={() => window.location.href = '/login'}
               >
                 <LogIn className="h-4 w-4" /> Log In
               </Button>
               <Button 
                 className="bg-sage-600 hover:bg-sage-700 text-white w-full flex items-center justify-center gap-2"
+                onClick={() => window.location.href = '/signup'}
               >
                 <UserPlus className="h-4 w-4" /> Sign Up
               </Button>
