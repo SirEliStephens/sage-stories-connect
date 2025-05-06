@@ -13,6 +13,7 @@ import BecomeProvider from "./pages/BecomeProvider";
 import Connect from "./pages/Connect";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import FunFacts from "./pages/FunFacts";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/connect" element={<Connect />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/fun-facts" element={<FunFacts />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

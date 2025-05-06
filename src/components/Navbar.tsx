@@ -19,13 +19,13 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white border-b border-gray-100 py-4 sticky top-0 z-50 w-full">
-      <div className="container-custom flex justify-between items-center" style={{ width: "120%" }}>
+      <div className="container-custom flex justify-between items-center" style={{ width: "140%" }}>
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/3a4a88ef-7708-4bd2-9911-1587d82c2b8e.png" 
               alt="SAGE+ Logo" 
-              className="h-12 mr-2" 
+              className="h-16 mr-2" 
             />
             <div className="flex items-center">
               <span className="text-2xl font-serif font-semibold text-sage-700">SAGE</span>
@@ -59,6 +59,12 @@ const Navbar = () => {
             className={`${isActive('/connect') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition`}
           >
             Connect
+          </Link>
+          <Link 
+            to="/fun-facts" 
+            className={`${isActive('/fun-facts') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition`}
+          >
+            Fun Facts
           </Link>
           <Link 
             to="/about" 
@@ -129,6 +135,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Connect
+            </Link>
+            <Link 
+              to="/fun-facts" 
+              className={`${isActive('/fun-facts') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Fun Facts
             </Link>
             <Link 
               to="/about" 
