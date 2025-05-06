@@ -77,7 +77,7 @@ const FactCard: React.FC<FactCardProps> = ({ fact, onFactUpdate }) => {
   };
 
   return (
-    <Card className="w-full bg-white shadow-md hover:shadow-lg transition-shadow">
+    <Card className="w-full bg-white shadow-md hover:shadow-lg transition-shadow min-h-[400px] flex flex-col">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
           <span className="text-xs font-medium uppercase tracking-wider text-gray-500">
@@ -88,94 +88,92 @@ const FactCard: React.FC<FactCardProps> = ({ fact, onFactUpdate }) => {
           )}
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
-        <p className="text-lg font-medium">{fact.content}</p>
+      <CardContent className="pt-0 flex-grow flex items-center">
+        <p className="text-xl font-medium text-center">{fact.content}</p>
+      </CardContent>
+      
+      <CardFooter className="flex flex-col border-t pt-4 gap-4">
+        <div className="flex justify-between items-center w-full">
+          <div className="flex space-x-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleLike}
+              className={`flex items-center gap-1 ${fact.userLiked ? 'text-green-600' : ''}`}
+            >
+              <ThumbsUp className="h-4 w-4" /> {fact.likes}
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleDislike}
+              className={`flex items-center gap-1 ${fact.userDisliked ? 'text-red-600' : ''}`}
+            >
+              <ThumbsDown className="h-4 w-4" /> {fact.dislikes}
+            </Button>
+          </div>
+          <div className="flex space-x-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => setIsCommenting(!isCommenting)}
+              className="flex items-center gap-1"
+            >
+              <MessageSquare className="h-4 w-4" /> 
+              {fact.comments.length > 0 && fact.comments.length}
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleBookmark}
+              className={`flex items-center gap-1 ${fact.userBookmarked ? 'text-blue-600' : ''}`}
+            >
+              <Bookmark className="h-4 w-4" /> {fact.bookmarks}
+            </Button>
+          </div>
+        </div>
         
         {/* Comments section */}
-        {(fact.comments.length > 0 || isCommenting) && (
-          <div className="mt-4 border-t pt-4">
-            <h4 className="text-sm font-semibold mb-2">Comments</h4>
-            
-            {fact.comments.map((comment) => (
-              <div key={comment.id} className="pb-2 mb-2 border-b border-gray-100 last:border-0 last:mb-0 last:pb-0">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">{comment.username}</span>
-                  <span className="text-xs text-gray-500">
-                    {new Date(comment.createdAt).toLocaleDateString()}
-                  </span>
-                </div>
-                <p className="text-sm mt-1">{comment.text}</p>
-              </div>
-            ))}
-            
-            {isCommenting && (
-              <div className="mt-2">
-                <Textarea
-                  value={commentText}
-                  onChange={(e) => setCommentText(e.target.value)}
-                  placeholder="Add your comment..."
-                  className="mb-2"
-                />
-                <div className="flex justify-end gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => setIsCommenting(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    onClick={handleSubmitComment} 
-                    disabled={isSubmitting || !commentText.trim()}
-                    className="flex items-center gap-1"
-                  >
-                    <Send className="h-3 w-3" /> Submit
-                  </Button>
-                </div>
-              </div>
-            )}
+        {isCommenting && (
+          <div className="w-full pt-2 border-t">
+            <Textarea
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              placeholder="Add your comment..."
+              className="mb-2"
+            />
+            <div className="flex justify-end gap-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setIsCommenting(false)}
+              >
+                Cancel
+              </Button>
+              <Button 
+                size="sm" 
+                onClick={handleSubmitComment} 
+                disabled={isSubmitting || !commentText.trim()}
+                className="flex items-center gap-1"
+              >
+                <Send className="h-3 w-3" /> Submit
+              </Button>
+            </div>
           </div>
         )}
-      </CardContent>
-      <CardFooter className="flex justify-between pt-2 border-t">
-        <div className="flex space-x-4">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={handleLike}
-            className={`flex items-center gap-1 ${fact.userLiked ? 'text-green-600' : ''}`}
-          >
-            <ThumbsUp className="h-4 w-4" /> {fact.likes}
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={handleDislike}
-            className={`flex items-center gap-1 ${fact.userDisliked ? 'text-red-600' : ''}`}
-          >
-            <ThumbsDown className="h-4 w-4" /> {fact.dislikes}
-          </Button>
-        </div>
-        <div className="flex space-x-2">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => setIsCommenting(!isCommenting)}
-            className="flex items-center gap-1"
-          >
-            <MessageSquare className="h-4 w-4" /> 
-            {fact.comments.length > 0 && fact.comments.length}
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={handleBookmark}
-            className={`flex items-center gap-1 ${fact.userBookmarked ? 'text-blue-600' : ''}`}
-          >
-            <Bookmark className="h-4 w-4" /> {fact.bookmarks}
-          </Button>
-        </div>
+        
+        {fact.comments.length > 0 && !isCommenting && (
+          <div className="w-full pt-2 border-t">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => setIsCommenting(true)}
+              className="w-full text-sm text-gray-600"
+            >
+              View {fact.comments.length} comments
+            </Button>
+          </div>
+        )}
       </CardFooter>
     </Card>
   );

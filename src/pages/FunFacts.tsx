@@ -1,13 +1,19 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FactCard from '@/components/FactCard';
 import { Fact, FactCategory } from '@/types/funFacts';
 import { getFactsByCategory } from '@/services/factsService';
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from "@/components/ui/carousel";
 
 // Categories with display names
 const categories: { value: FactCategory; label: string }[] = [
@@ -54,60 +60,59 @@ const FunFacts: React.FC = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <main className="flex-grow py-12 bg-gray-50">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-sage-700">Fun Facts</h1>
-              <p className="text-gray-600">
-                Discover interesting facts from various categories. Like, bookmark, or comment on facts that interest you!
-              </p>
+      <main className="flex-grow py-6 bg-gray-50">
+        <div className="container-custom max-w-4xl mx-auto px-4">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl md:text-3xl font-semibold text-sage-700">Fun Facts</h1>
+            <p className="text-gray-600 text-sm">
+              Swipe to discover interesting facts from various categories
+            </p>
+          </div>
+          
+          <Tabs defaultValue={activeCategory} onValueChange={(value) => setActiveCategory(value as FactCategory)} className="w-full">
+            <div className="flex justify-center mb-6">
+              <TabsList className="bg-white shadow-sm">
+                {categories.map((category) => (
+                  <TabsTrigger 
+                    key={category.value} 
+                    value={category.value}
+                    className="px-4 py-2 data-[state=active]:bg-sage-100 data-[state=active]:text-sage-700"
+                  >
+                    {category.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
             </div>
             
-            <Tabs defaultValue={activeCategory} onValueChange={(value) => setActiveCategory(value as FactCategory)} className="w-full">
-              <div className="flex justify-center mb-6">
-                <TabsList className="bg-white shadow-sm">
-                  {categories.map((category) => (
-                    <TabsTrigger 
-                      key={category.value} 
-                      value={category.value}
-                      className="px-4 py-2 data-[state=active]:bg-sage-100 data-[state=active]:text-sage-700"
-                    >
-                      {category.label}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </div>
-              
-              {categories.map((category) => (
-                <TabsContent key={category.value} value={category.value} className="mt-0">
-                  {isLoading ? (
-                    <div className="space-y-4">
-                      {[1, 2, 3].map((i) => (
-                        <Card key={i} className="w-full bg-white shadow animate-pulse">
-                          <CardContent className="p-6">
-                            <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
-                            <div className="h-6 bg-gray-200 rounded w-full mb-2"></div>
-                            <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="space-y-6">
-                      {facts.map((fact) => (
-                        <FactCard
-                          key={fact.id}
-                          fact={fact}
-                          onFactUpdate={handleFactUpdate}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </TabsContent>
-              ))}
-            </Tabs>
-          </div>
+            {categories.map((category) => (
+              <TabsContent key={category.value} value={category.value} className="mt-0">
+                {isLoading ? (
+                  <div className="h-[400px] w-full bg-white shadow animate-pulse rounded-lg"></div>
+                ) : (
+                  <div className="relative px-10">
+                    <Carousel className="w-full">
+                      <CarouselContent>
+                        {facts.map((fact) => (
+                          <CarouselItem key={fact.id} className="flex justify-center">
+                            <div className="w-full max-w-md mx-auto">
+                              <FactCard
+                                fact={fact}
+                                onFactUpdate={handleFactUpdate}
+                              />
+                            </div>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between pointer-events-none">
+                        <CarouselPrevious className="pointer-events-auto relative left-0" />
+                        <CarouselNext className="pointer-events-auto relative right-0" />
+                      </div>
+                    </Carousel>
+                  </div>
+                )}
+              </TabsContent>
+            ))}
+          </Tabs>
         </div>
       </main>
       

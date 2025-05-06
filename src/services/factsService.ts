@@ -92,7 +92,7 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
     {
       id: uuidv4(),
       category: 'science',
-      content: 'Bananas are berries, but strawberries aren\'t.',
+      content: "Bananas are berries, but strawberries aren't.",
       source: 'Botanical Classification Guide',
       likes: 52,
       dislikes: 7,
@@ -136,7 +136,7 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
     {
       id: uuidv4(),
       category: 'politics',
-      content: 'The Liberty Bell was last rung on George Washington\'s birthday in 1846.',
+      content: "The Liberty Bell was last rung on George Washington's birthday in 1846.",
       source: 'American Historical Review',
       likes: 19,
       dislikes: 5,
@@ -146,7 +146,7 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
     {
       id: uuidv4(),
       category: 'politics',
-      content: 'The US Constitution doesn\'t set the number of Supreme Court Justices. Congress decides.',
+      content: "The US Constitution doesn't set the number of Supreme Court Justices. Congress decides.",
       source: 'Constitutional Studies',
       likes: 37,
       dislikes: 9,
@@ -168,7 +168,7 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
     {
       id: uuidv4(),
       category: 'current-events',
-      content: 'More than 90% of the world\'s data has been created in just the last few years.',
+      content: "More than 90% of the world's data has been created in just the last few years.",
       source: 'Digital Trends Report 2024',
       likes: 29,
       dislikes: 6,
