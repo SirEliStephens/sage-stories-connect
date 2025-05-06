@@ -134,24 +134,24 @@ const About = () => {
             <div className="text-center">
               <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4">
                 <img 
-                  src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5" 
-                  alt="Team Member" 
+                  src="/lovable-uploads/fc9fc7de-ea93-4a6a-8874-de7a91473ff8.png" 
+                  alt="Eli Stephens" 
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="text-lg font-semibold">Michael Chen</h3>
+              <h3 className="text-lg font-semibold">Eli Stephens</h3>
               <p className="text-sage-600">Co-Founder & CTO</p>
             </div>
             
             <div className="text-center">
               <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4">
                 <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2" 
-                  alt="Team Member" 
+                  src="/lovable-uploads/845b2104-2c9e-48cb-8232-d5e2b81f5259.png" 
+                  alt="Eli Stephens" 
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="text-lg font-semibold">Elena Rodriguez</h3>
+              <h3 className="text-lg font-semibold">Eli Stephens</h3>
               <p className="text-sage-600">Head of Operations</p>
             </div>
           </div>

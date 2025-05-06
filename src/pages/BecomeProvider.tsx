@@ -14,7 +14,7 @@ import { Slider } from '@/components/ui/slider';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
-import { Heart, Briefcase, GraduationCap, MessageSquare, User } from 'lucide-react';
+import { Heart, Briefcase, GraduationCap, MessageSquare, User, Globe, Flag } from 'lucide-react';
 
 const topics = [
   { id: 'loneliness', label: 'Loneliness' },
@@ -31,6 +31,7 @@ const topics = [
   { id: 'trauma', label: 'Trauma' },
   { id: 'grief', label: 'Grief' },
   { id: 'self-image', label: 'Self-image issues' },
+  { id: 'anything', label: 'Talk to me about ANYTHING' },
 ];
 
 const traits = [
@@ -44,6 +45,50 @@ const traits = [
   { id: 'open-minded', label: 'Open-minded' },
   { id: 'supportive', label: 'Supportive' },
   { id: 'non-judgmental', label: 'Non-judgmental' },
+];
+
+const countries = [
+  { id: 'america', label: 'America' },
+  { id: 'canada', label: 'Canada' },
+  { id: 'mexico', label: 'Mexico' },
+  { id: 'china', label: 'China' },
+];
+
+// Political questionnaire questions
+const politicalQuestions = [
+  {
+    id: 'trans-hormones',
+    question: 'Should parents give hormone supplements to their kids to become transgender?',
+    options: [
+      { value: 'strongly-agree', label: 'Strongly Agree' },
+      { value: 'agree', label: 'Agree' },
+      { value: 'neutral', label: 'Neutral' },
+      { value: 'disagree', label: 'Disagree' },
+      { value: 'strongly-disagree', label: 'Strongly Disagree' },
+    ]
+  },
+  {
+    id: 'gun-rights',
+    question: 'Do you believe in stricter gun control laws?',
+    options: [
+      { value: 'strongly-agree', label: 'Strongly Agree' },
+      { value: 'agree', label: 'Agree' },
+      { value: 'neutral', label: 'Neutral' },
+      { value: 'disagree', label: 'Disagree' },
+      { value: 'strongly-disagree', label: 'Strongly Disagree' },
+    ]
+  },
+  {
+    id: 'healthcare',
+    question: 'Should healthcare be provided by the government for all citizens?',
+    options: [
+      { value: 'strongly-agree', label: 'Strongly Agree' },
+      { value: 'agree', label: 'Agree' },
+      { value: 'neutral', label: 'Neutral' },
+      { value: 'disagree', label: 'Disagree' },
+      { value: 'strongly-disagree', label: 'Strongly Disagree' },
+    ]
+  }
 ];
 
 const formSchema = z.object({
@@ -70,6 +115,8 @@ const formSchema = z.object({
     .refine(files => !files || files.length === 0 || (files.length === 1 && files[0].type.startsWith('image/')), {
       message: "Profile image must be a valid image file.",
     }),
+  favorableCountries: z.array(z.string()).optional(),
+  politicalQuestions: z.record(z.string(), z.string()).optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -77,6 +124,8 @@ type FormValues = z.infer<typeof formSchema>;
 const BecomeProvider = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [showPoliticalSlider, setShowPoliticalSlider] = useState(false);
+  const [showPoliticalQuestionnaire, setShowPoliticalQuestionnaire] = useState(false);
+  
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -95,6 +144,8 @@ const BecomeProvider = () => {
       linkedinProfile: "",
       otherSocialMedia: "",
       bio: "",
+      favorableCountries: [],
+      politicalQuestions: {},
     },
   });
 
@@ -112,6 +163,7 @@ const BecomeProvider = () => {
   const handlePoliticalViewChange = (value: string) => {
     form.setValue("politicalView", value as "non-political" | "liberal" | "moderate" | "conservative");
     setShowPoliticalSlider(value !== "non-political");
+    setShowPoliticalQuestionnaire(value !== "non-political");
   };
 
   const onSubmit = (data: FormValues) => {
@@ -321,7 +373,9 @@ const BecomeProvider = () => {
                                       htmlFor={`topic-${topic.id}`}
                                       className={`px-3 py-1 rounded-full text-sm cursor-pointer transition-colors ${
                                         field.value?.includes(topic.id)
-                                          ? 'bg-purple-200 text-purple-800'
+                                          ? topic.id === 'anything' 
+                                              ? 'bg-purple-300 text-purple-900' 
+                                              : 'bg-purple-200 text-purple-800'
                                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                       }`}
                                     >
@@ -406,6 +460,65 @@ const BecomeProvider = () => {
                       )}
                     />
                     
+                    {/* Countries View Favorably Section */}
+                    <FormField
+                      control={form.control}
+                      name="favorableCountries"
+                      render={() => (
+                        <FormItem>
+                          <div>
+                            <FormLabel className="flex items-center gap-2">
+                              <Globe size={18} />
+                              Countries You View Favorably
+                            </FormLabel>
+                            <FormDescription>
+                              Select countries you have a positive view about
+                            </FormDescription>
+                          </div>
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {countries.map((country) => (
+                              <FormField
+                                key={country.id}
+                                control={form.control}
+                                name="favorableCountries"
+                                render={({ field }) => {
+                                  return (
+                                    <label
+                                      htmlFor={`country-${country.id}`}
+                                      className={`px-3 py-1 rounded-full text-sm cursor-pointer transition-colors flex items-center gap-1 ${
+                                        field.value?.includes(country.id)
+                                          ? 'bg-blue-200 text-blue-800'
+                                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                      }`}
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        id={`country-${country.id}`}
+                                        className="sr-only"
+                                        checked={field.value?.includes(country.id) || false}
+                                        onChange={(e) => {
+                                          const checked = e.target.checked;
+                                          const currentValues = field.value || [];
+                                          field.onChange(
+                                            checked
+                                              ? [...currentValues, country.id]
+                                              : currentValues.filter((value) => value !== country.id)
+                                          );
+                                        }}
+                                      />
+                                      <Flag size={14} />
+                                      <span>{country.label}</span>
+                                    </label>
+                                  );
+                                }}
+                              />
+                            ))}
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
                     <FormField
                       control={form.control}
                       name="politicalView"
@@ -476,6 +589,45 @@ const BecomeProvider = () => {
                           </FormItem>
                         )}
                       />
+                    )}
+                    
+                    {/* Political Questionnaire Section */}
+                    {showPoliticalQuestionnaire && (
+                      <div className="space-y-6 border rounded-lg p-4 bg-gray-50">
+                        <h3 className="text-lg font-medium">Political Questionnaire</h3>
+                        <p className="text-sm text-gray-600">Please share your stance on the following issues:</p>
+                        
+                        {politicalQuestions.map((question) => (
+                          <div key={question.id} className="space-y-3">
+                            <h4 className="font-medium text-sm">{question.question}</h4>
+                            <FormField
+                              control={form.control}
+                              name={`politicalQuestions.${question.id}` as any}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <RadioGroup
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                      className="flex flex-col space-y-1"
+                                    >
+                                      {question.options.map((option) => (
+                                        <div key={option.value} className="flex items-center space-x-2">
+                                          <RadioGroupItem value={option.value} id={`${question.id}-${option.value}`} />
+                                          <label htmlFor={`${question.id}-${option.value}`} className="text-sm">
+                                            {option.label}
+                                          </label>
+                                        </div>
+                                      ))}
+                                    </RadioGroup>
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+                      </div>
                     )}
                     
                     <FormField
@@ -620,7 +772,7 @@ const BecomeProvider = () => {
                             form.watch('topics')?.slice(0, 6).map((topicId) => {
                               const topic = topics.find(t => t.id === topicId);
                               return topic ? (
-                                <span key={topic.id} className="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded-full">
+                                <span key={topic.id} className={`${topic.id === 'anything' ? 'bg-purple-300 text-purple-900' : 'bg-purple-100 text-purple-800'} text-xs px-2.5 py-1 rounded-full`}>
                                   {topic.label}
                                 </span>
                               ) : null;
@@ -656,6 +808,26 @@ const BecomeProvider = () => {
                         </h4>
                         <p className="text-gray-600 mt-1">{form.watch('languages') || "English"}</p>
                       </div>
+
+                      {/* Countries */}
+                      {form.watch('favorableCountries')?.length ? (
+                        <div className="px-6 py-4 border-t border-gray-100">
+                          <h4 className="flex items-center gap-2 font-medium">
+                            <Globe size={16} /> Favorable Countries
+                          </h4>
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {form.watch('favorableCountries')?.map((countryId) => {
+                              const country = countries.find(c => c.id === countryId);
+                              return country ? (
+                                <span key={country.id} className="inline-flex items-center gap-1 text-xs bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full">
+                                  <Flag size={12} />
+                                  {country.label}
+                                </span>
+                              ) : null;
+                            })}
+                          </div>
+                        </div>
+                      ) : null}
                       
                       {/* Personal Traits */}
                       <div className="px-6 py-4 border-t border-gray-100">
