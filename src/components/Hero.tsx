@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -17,12 +17,16 @@ const Hero = () => {
               From elderly care to storytelling and mental health support.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button size="lg" className="bg-sage-600 hover:bg-sage-700 text-white px-6">
-                Find Support
-              </Button>
-              <Button size="lg" variant="outline" className="border-ocean-500 text-ocean-600 hover:bg-ocean-50">
-                Become a Provider
-              </Button>
+              <Link to="/connect">
+                <Button size="lg" className="bg-sage-600 hover:bg-sage-700 text-white px-6">
+                  Find Support
+                </Button>
+              </Link>
+              <Link to="/become-provider">
+                <Button size="lg" variant="outline" className="border-ocean-500 text-ocean-600 hover:bg-ocean-50">
+                  Become a Provider
+                </Button>
+              </Link>
             </div>
           </div>
           <div className="relative hidden lg:block">

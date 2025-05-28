@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -10,8 +9,23 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 
+// Define the provider type
+type Provider = {
+  name: string;
+  role: string;
+  age: number;
+  location: string;
+  image: string;
+  bio: string;
+  type: 'caregiver' | 'storyteller' | 'support';
+  background: string;
+  education: string;
+  politics: string;
+  gender: string;
+};
+
 // Sample provider data for demonstration
-const sampleProviders = [
+const sampleProviders: Provider[] = [
   {
     name: 'Maria Rodriguez',
     role: 'Elder Care Specialist',
@@ -94,7 +108,7 @@ const sampleProviders = [
 
 const Connect = () => {
   const [activeTab, setActiveTab] = useState('caregiver');
-  const [filteredProviders, setFilteredProviders] = useState(
+  const [filteredProviders, setFilteredProviders] = useState<Provider[]>(
     sampleProviders.filter(provider => provider.type === 'caregiver')
   );
   const [searchTerm, setSearchTerm] = useState('');

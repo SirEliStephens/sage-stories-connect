@@ -8,6 +8,7 @@ import Features from '@/components/Features';
 import Testimonials from '@/components/Testimonials';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 // Sample profiles for each service type
 const featuredProfiles = [
@@ -64,9 +65,11 @@ const Index = () => {
           </div>
           
           <div className="mt-12 text-center">
-            <Button className="bg-ocean-600 hover:bg-ocean-700 text-white px-6">
-              View All Profiles
-            </Button>
+            <Link to="/connect">
+              <Button className="bg-ocean-600 hover:bg-ocean-700 text-white px-6">
+                View All Profiles
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -82,12 +85,16 @@ const Index = () => {
             Join SAGE+ today and be part of a community that values connection, wisdom, and support across generations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-sage-600 hover:bg-sage-700 text-white px-8">
-              Sign Up Now
-            </Button>
-            <Button size="lg" variant="outline" className="border-sage-600 text-sage-700 hover:bg-sage-50 px-8">
-              Learn More
-            </Button>
+            <Link to="/signup">
+              <Button size="lg" className="bg-sage-600 hover:bg-sage-700 text-white px-8">
+                Sign Up Now
+              </Button>
+            </Link>
+            <Link to="/about">
+              <Button size="lg" variant="outline" className="border-sage-600 text-sage-700 hover:bg-sage-50 px-8">
+                Learn More
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
