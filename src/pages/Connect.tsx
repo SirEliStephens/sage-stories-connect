@@ -17,7 +17,7 @@ type Provider = {
   location: string;
   image: string;
   bio: string;
-  type: 'caregiver' | 'storyteller' | 'support';
+  type: 'caregiver' | 'storyteller' | 'support' | 'psychologist';
   background: string;
   education: string;
   politics: string;
@@ -103,6 +103,32 @@ const sampleProviders: Provider[] = [
     education: 'Master\'s in Social Work (in progress)',
     politics: 'Liberal',
     gender: 'Male'
+  },
+  {
+    name: 'Dr. Sarah Wilson',
+    role: 'Amateur Psychologist',
+    age: 34,
+    location: 'Austin, TX',
+    image: 'https://images.unsplash.com/photo-1494790108755-2616b612b0e1',
+    bio: 'Self-taught psychology enthusiast with a passion for understanding human behavior. I offer informal counseling sessions and psychological insights.',
+    type: 'psychologist' as const,
+    background: 'Self-taught Psychology',
+    education: 'Bachelor\'s in Liberal Arts',
+    politics: 'Liberal',
+    gender: 'Female'
+  },
+  {
+    name: 'James Miller',
+    role: 'Amateur Therapist',
+    age: 45,
+    location: 'Denver, CO',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a',
+    bio: 'Former corporate executive turned amateur psychologist. I enjoy helping people work through their challenges using practical psychology principles.',
+    type: 'psychologist' as const,
+    background: 'Business Background',
+    education: 'MBA + Psychology Courses',
+    politics: 'Moderate',
+    gender: 'Male'
   }
 ];
 
@@ -113,8 +139,7 @@ const Connect = () => {
   );
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
-    ageMin: 18,
-    ageMax: 80,
+    ageRange: [18, 80] as [number, number],
     gender: [] as string[],
     education: [] as string[],
     politics: [] as string[],
@@ -152,9 +177,9 @@ const Connect = () => {
     });
   };
 
-  const handleAgeChange = (value: number[]) => {
+  const handleAgeRangeChange = (value: number[]) => {
     setFilters(prev => {
-      const updated = { ...prev, ageMin: value[0], ageMax: value[0] };
+      const updated = { ...prev, ageRange: [value[0], value[1]] as [number, number] };
       applyFilters(activeTab, updated);
       return updated;
     });
@@ -189,9 +214,9 @@ const Connect = () => {
       );
     }
     
-    // Apply age filter
+    // Apply age range filter
     results = results.filter(
-      provider => provider.age >= currentFilters.ageMin && provider.age <= currentFilters.ageMax
+      provider => provider.age >= currentFilters.ageRange[0] && provider.age <= currentFilters.ageRange[1]
     );
     
     setFilteredProviders(results);
@@ -207,7 +232,7 @@ const Connect = () => {
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl font-serif font-semibold text-sage-700 mb-4">Find Your Perfect Connection</h1>
               <p className="text-gray-600 mb-8">
-                Connect with caregivers, storytellers, and support providers who can make a difference in your life.
+                Connect with caregivers, storytellers, support providers, and amateur psychologists who can make a difference in your life.
                 Choose based on what matters most to you: background, expertise, age, values, and more.
               </p>
             </div>
@@ -234,17 +259,19 @@ const Connect = () => {
                     </div>
                     
                     <div>
-                      <h3 className="text-sm font-medium text-gray-700 mb-3">Age</h3>
+                      <h3 className="text-sm font-medium text-gray-700 mb-3">Age Range</h3>
                       <div className="px-2">
                         <Slider 
-                          defaultValue={[filters.ageMin]} 
+                          defaultValue={filters.ageRange} 
                           max={80} 
                           min={18} 
                           step={1}
-                          onValueChange={handleAgeChange}
+                          onValueChange={handleAgeRangeChange}
+                          className="w-full"
                         />
-                        <div className="mt-2 text-sm text-gray-600">
-                          {filters.ageMin} years old
+                        <div className="mt-2 text-sm text-gray-600 flex justify-between">
+                          <span>{filters.ageRange[0]} years</span>
+                          <span>{filters.ageRange[1]} years</span>
                         </div>
                       </div>
                     </div>
@@ -292,16 +319,14 @@ const Connect = () => {
                       className="w-full border-sage-500 text-sage-700"
                       onClick={() => {
                         setFilters({
-                          ageMin: 18,
-                          ageMax: 80,
+                          ageRange: [18, 80],
                           gender: [],
                           education: [],
                           politics: [],
                         });
                         setSearchTerm('');
                         applyFilters(activeTab, {
-                          ageMin: 18,
-                          ageMax: 80,
+                          ageRange: [18, 80],
                           gender: [],
                           education: [],
                           politics: [],
@@ -317,10 +342,11 @@ const Connect = () => {
               {/* Main Content */}
               <div className="lg:w-3/4">
                 <Tabs defaultValue="caregiver" className="w-full" onValueChange={handleTabChange}>
-                  <TabsList className="mb-6 bg-sage-100">
-                    <TabsTrigger value="caregiver" className="flex-1">Caregivers</TabsTrigger>
-                    <TabsTrigger value="storyteller" className="flex-1">Storytellers</TabsTrigger>
-                    <TabsTrigger value="support" className="flex-1">Support Providers</TabsTrigger>
+                  <TabsList className="mb-6 bg-sage-100 grid grid-cols-4 w-full">
+                    <TabsTrigger value="caregiver">Caregivers</TabsTrigger>
+                    <TabsTrigger value="storyteller">Storytellers</TabsTrigger>
+                    <TabsTrigger value="support">Support Providers</TabsTrigger>
+                    <TabsTrigger value="psychologist">Amateur Psychologists</TabsTrigger>
                   </TabsList>
                   
                   <TabsContent value="caregiver" className="mt-0">
@@ -360,6 +386,20 @@ const Connect = () => {
                       ) : (
                         <div className="col-span-2 text-center py-12">
                           <p className="text-gray-600">No support providers found matching your criteria.</p>
+                        </div>
+                      )}
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="psychologist" className="mt-0">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {filteredProviders.length > 0 ? (
+                        filteredProviders.map((provider, index) => (
+                          <ProfileCard key={index} {...provider} />
+                        ))
+                      ) : (
+                        <div className="col-span-2 text-center py-12">
+                          <p className="text-gray-600">No amateur psychologists found matching your criteria.</p>
                         </div>
                       )}
                     </div>
