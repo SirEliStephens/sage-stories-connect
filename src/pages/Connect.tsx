@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -8,6 +9,8 @@ import ProfileCard from '@/components/ProfileCard';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 // Define the provider type
 type Provider = {
@@ -22,6 +25,9 @@ type Provider = {
   education: string;
   politics: string;
   gender: string;
+  religion: string;
+  hourlyRate: number;
+  distanceFromCity: number;
 };
 
 // Sample provider data for demonstration
@@ -37,7 +43,10 @@ const sampleProviders: Provider[] = [
     background: 'Nursing Assistant',
     education: 'Certified Nursing Assistant (CNA)',
     politics: 'Moderate',
-    gender: 'Female'
+    gender: 'Female',
+    religion: 'Christian',
+    hourlyRate: 25,
+    distanceFromCity: 5
   },
   {
     name: 'George Washington',
@@ -50,7 +59,10 @@ const sampleProviders: Provider[] = [
     background: 'History Teacher',
     education: 'Master\'s in Education',
     politics: 'Conservative',
-    gender: 'Male'
+    gender: 'Male',
+    religion: 'Christian',
+    hourlyRate: 40,
+    distanceFromCity: 15
   },
   {
     name: 'Aisha Johnson',
@@ -63,7 +75,10 @@ const sampleProviders: Provider[] = [
     background: 'Mental Health Volunteer',
     education: 'Bachelor\'s in Psychology (in progress)',
     politics: 'Liberal',
-    gender: 'Female'
+    gender: 'Female',
+    religion: 'Muslim',
+    hourlyRate: 15,
+    distanceFromCity: 8
   },
   {
     name: 'Michael Chen',
@@ -76,7 +91,10 @@ const sampleProviders: Provider[] = [
     background: 'Home Health Aide',
     education: 'Bachelor\'s in Social Work',
     politics: 'Progressive',
-    gender: 'Male'
+    gender: 'Male',
+    religion: 'Buddhist',
+    hourlyRate: 30,
+    distanceFromCity: 12
   },
   {
     name: 'Eleanor James',
@@ -89,7 +107,10 @@ const sampleProviders: Provider[] = [
     background: 'Finance Executive',
     education: 'MBA, Harvard Business School',
     politics: 'Centrist',
-    gender: 'Female'
+    gender: 'Female',
+    religion: 'Jewish',
+    hourlyRate: 75,
+    distanceFromCity: 20
   },
   {
     name: 'David Park',
@@ -102,7 +123,10 @@ const sampleProviders: Provider[] = [
     background: 'Recovery Coach',
     education: 'Master\'s in Social Work (in progress)',
     politics: 'Liberal',
-    gender: 'Male'
+    gender: 'Male',
+    religion: 'Agnostic',
+    hourlyRate: 20,
+    distanceFromCity: 6
   },
   {
     name: 'Dr. Sarah Wilson',
@@ -115,7 +139,10 @@ const sampleProviders: Provider[] = [
     background: 'Self-taught Psychology',
     education: 'Bachelor\'s in Liberal Arts',
     politics: 'Liberal',
-    gender: 'Female'
+    gender: 'Female',
+    religion: 'Atheist',
+    hourlyRate: 35,
+    distanceFromCity: 10
   },
   {
     name: 'James Miller',
@@ -128,7 +155,10 @@ const sampleProviders: Provider[] = [
     background: 'Business Background',
     education: 'MBA + Psychology Courses',
     politics: 'Moderate',
-    gender: 'Male'
+    gender: 'Male',
+    religion: 'Hindu',
+    hourlyRate: 50,
+    distanceFromCity: 18
   }
 ];
 
@@ -138,11 +168,15 @@ const Connect = () => {
     sampleProviders.filter(provider => provider.type === 'caregiver')
   );
   const [searchTerm, setSearchTerm] = useState('');
+  const [userCity, setUserCity] = useState('');
   const [filters, setFilters] = useState({
     ageRange: [18, 80] as [number, number],
     gender: [] as string[],
     education: [] as string[],
     politics: [] as string[],
+    religion: [] as string[],
+    payRange: [5, 150] as [number, number],
+    distanceRange: [0, 50] as [number, number],
   });
 
   const handleTabChange = (value: string) => {
@@ -177,9 +211,36 @@ const Connect = () => {
     });
   };
 
+  const toggleReligionFilter = (religion: string) => {
+    setFilters(prev => {
+      const updated = prev.religion.includes(religion)
+        ? { ...prev, religion: prev.religion.filter(r => r !== religion) }
+        : { ...prev, religion: [...prev.religion, religion] };
+      
+      applyFilters(activeTab, updated);
+      return updated;
+    });
+  };
+
   const handleAgeRangeChange = (value: number[]) => {
     setFilters(prev => {
       const updated = { ...prev, ageRange: [value[0], value[1]] as [number, number] };
+      applyFilters(activeTab, updated);
+      return updated;
+    });
+  };
+
+  const handlePayRangeChange = (value: number[]) => {
+    setFilters(prev => {
+      const updated = { ...prev, payRange: [value[0], value[1]] as [number, number] };
+      applyFilters(activeTab, updated);
+      return updated;
+    });
+  };
+
+  const handleDistanceRangeChange = (value: number[]) => {
+    setFilters(prev => {
+      const updated = { ...prev, distanceRange: [value[0], value[1]] as [number, number] };
       applyFilters(activeTab, updated);
       return updated;
     });
@@ -213,11 +274,30 @@ const Connect = () => {
         currentFilters.politics.includes(provider.politics)
       );
     }
+
+    // Apply religion filter
+    if (currentFilters.religion.length > 0) {
+      results = results.filter(provider => 
+        currentFilters.religion.includes(provider.religion)
+      );
+    }
     
     // Apply age range filter
     results = results.filter(
       provider => provider.age >= currentFilters.ageRange[0] && provider.age <= currentFilters.ageRange[1]
     );
+
+    // Apply pay range filter
+    results = results.filter(
+      provider => provider.hourlyRate >= currentFilters.payRange[0] && provider.hourlyRate <= currentFilters.payRange[1]
+    );
+
+    // Apply distance filter (only if user has set a city)
+    if (userCity) {
+      results = results.filter(
+        provider => provider.distanceFromCity >= currentFilters.distanceRange[0] && provider.distanceFromCity <= currentFilters.distanceRange[1]
+      );
+    }
     
     setFilteredProviders(results);
   };
@@ -257,12 +337,22 @@ const Connect = () => {
                         onChange={handleSearch}
                       />
                     </div>
+
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-3">Your City (for distance)</h3>
+                      <Input 
+                        type="text" 
+                        placeholder="Enter your city" 
+                        value={userCity}
+                        onChange={(e) => setUserCity(e.target.value)}
+                      />
+                    </div>
                     
                     <div>
                       <h3 className="text-sm font-medium text-gray-700 mb-3">Age Range</h3>
                       <div className="px-2">
                         <Slider 
-                          defaultValue={filters.ageRange} 
+                          value={filters.ageRange} 
                           max={80} 
                           min={18} 
                           step={1}
@@ -275,6 +365,44 @@ const Connect = () => {
                         </div>
                       </div>
                     </div>
+
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-3">Hourly Rate ($)</h3>
+                      <div className="px-2">
+                        <Slider 
+                          value={filters.payRange} 
+                          max={150} 
+                          min={5} 
+                          step={5}
+                          onValueChange={handlePayRangeChange}
+                          className="w-full"
+                        />
+                        <div className="mt-2 text-sm text-gray-600 flex justify-between">
+                          <span>${filters.payRange[0]}/hr</span>
+                          <span>${filters.payRange[1]}/hr</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {userCity && (
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-700 mb-3">Distance (miles)</h3>
+                        <div className="px-2">
+                          <Slider 
+                            value={filters.distanceRange} 
+                            max={50} 
+                            min={0} 
+                            step={1}
+                            onValueChange={handleDistanceRangeChange}
+                            className="w-full"
+                          />
+                          <div className="mt-2 text-sm text-gray-600 flex justify-between">
+                            <span>{filters.distanceRange[0]} mi</span>
+                            <span>{filters.distanceRange[1]} mi</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     
                     <div>
                       <h3 className="text-sm font-medium text-gray-700 mb-3">Gender</h3>
@@ -313,6 +441,22 @@ const Connect = () => {
                         ))}
                       </div>
                     </div>
+
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-3">Religion</h3>
+                      <div className="space-y-2">
+                        {['Christian', 'Muslim', 'Jewish', 'Hindu', 'Buddhist', 'Polytheist', 'Pagan', 'Atheist', 'Agnostic'].map(religion => (
+                          <div className="flex items-center" key={religion}>
+                            <Checkbox 
+                              id={`religion-${religion.toLowerCase()}`} 
+                              checked={filters.religion.includes(religion)}
+                              onCheckedChange={() => toggleReligionFilter(religion)}
+                            />
+                            <Label htmlFor={`religion-${religion.toLowerCase()}`} className="ml-2">{religion}</Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                     
                     <Button 
                       variant="outline" 
@@ -323,13 +467,20 @@ const Connect = () => {
                           gender: [],
                           education: [],
                           politics: [],
+                          religion: [],
+                          payRange: [5, 150],
+                          distanceRange: [0, 50],
                         });
                         setSearchTerm('');
+                        setUserCity('');
                         applyFilters(activeTab, {
                           ageRange: [18, 80],
                           gender: [],
                           education: [],
                           politics: [],
+                          religion: [],
+                          payRange: [5, 150],
+                          distanceRange: [0, 50],
                         });
                       }}
                     >
