@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -223,24 +222,27 @@ const Connect = () => {
   };
 
   const handleAgeRangeChange = (value: number[]) => {
+    const newRange: [number, number] = [value[0], value[1]];
     setFilters(prev => {
-      const updated = { ...prev, ageRange: [value[0], value[1]] as [number, number] };
+      const updated = { ...prev, ageRange: newRange };
       applyFilters(activeTab, updated);
       return updated;
     });
   };
 
   const handlePayRangeChange = (value: number[]) => {
+    const newRange: [number, number] = [value[0], value[1]];
     setFilters(prev => {
-      const updated = { ...prev, payRange: [value[0], value[1]] as [number, number] };
+      const updated = { ...prev, payRange: newRange };
       applyFilters(activeTab, updated);
       return updated;
     });
   };
 
   const handleDistanceRangeChange = (value: number[]) => {
+    const newRange: [number, number] = [value[0], value[1]];
     setFilters(prev => {
-      const updated = { ...prev, distanceRange: [value[0], value[1]] as [number, number] };
+      const updated = { ...prev, distanceRange: newRange };
       applyFilters(activeTab, updated);
       return updated;
     });
@@ -422,6 +424,14 @@ const Connect = () => {
                             onCheckedChange={() => toggleGenderFilter('Female')}
                           />
                           <Label htmlFor="gender-female" className="ml-2">Female</Label>
+                        </div>
+                        <div className="flex items-center">
+                          <Checkbox 
+                            id="gender-nonbinary" 
+                            checked={filters.gender.includes('Non-binary/Trans')}
+                            onCheckedChange={() => toggleGenderFilter('Non-binary/Trans')}
+                          />
+                          <Label htmlFor="gender-nonbinary" className="ml-2">Non-binary/Trans</Label>
                         </div>
                       </div>
                     </div>
