@@ -176,6 +176,8 @@ const Connect = () => {
     religion: [] as string[],
     payRange: [5, 150],
     distanceRange: [0, 50],
+    background: [] as string[],
+    location: '',
   });
 
   const handleTabChange = (value: string) => {
@@ -221,6 +223,25 @@ const Connect = () => {
     });
   };
 
+  const toggleBackgroundFilter = (background: string) => {
+    setFilters(prev => {
+      const updated = prev.background.includes(background)
+        ? { ...prev, background: prev.background.filter(b => b !== background) }
+        : { ...prev, background: [...prev.background, background] };
+      
+      applyFilters(activeTab, updated);
+      return updated;
+    });
+  };
+
+  const handleLocationFilter = (location: string) => {
+    setFilters(prev => {
+      const updated = { ...prev, location };
+      applyFilters(activeTab, updated);
+      return updated;
+    });
+  };
+
   const handleAgeRangeChange = (value: number[]) => {
     setFilters(prev => {
       const updated = { ...prev, ageRange: value };
@@ -248,7 +269,7 @@ const Connect = () => {
   const applyFilters = (tabValue: string, currentFilters = filters) => {
     let results = sampleProviders.filter(provider => provider.type === tabValue);
     
-    // Apply search term
+    // Apply search term (enhanced to search multiple fields)
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       results = results.filter(
@@ -256,7 +277,9 @@ const Connect = () => {
           provider.name.toLowerCase().includes(term) || 
           provider.bio.toLowerCase().includes(term) ||
           provider.location.toLowerCase().includes(term) ||
-          provider.role.toLowerCase().includes(term)
+          provider.role.toLowerCase().includes(term) ||
+          provider.background.toLowerCase().includes(term) ||
+          provider.education.toLowerCase().includes(term)
       );
     }
     
@@ -278,6 +301,20 @@ const Connect = () => {
     if (currentFilters.religion.length > 0) {
       results = results.filter(provider => 
         currentFilters.religion.includes(provider.religion)
+      );
+    }
+
+    // Apply background filter
+    if (currentFilters.background.length > 0) {
+      results = results.filter(provider => 
+        currentFilters.background.some(bg => provider.background.toLowerCase().includes(bg.toLowerCase()))
+      );
+    }
+
+    // Apply location filter
+    if (currentFilters.location) {
+      results = results.filter(provider => 
+        provider.location.toLowerCase().includes(currentFilters.location.toLowerCase())
       );
     }
     
@@ -309,10 +346,10 @@ const Connect = () => {
         <section className="bg-sage-50 py-12">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl font-serif font-semibold text-sage-700 mb-4">Find Your Perfect Connection</h1>
+              <h1 className="text-4xl font-serif font-semibold text-sage-700 mb-4">Find Your Perfect Provider</h1>
               <p className="text-gray-600 mb-8">
                 Connect with caregivers, storytellers, support providers, and amateur psychologists who can make a difference in your life.
-                Choose based on what matters most to you: background, expertise, age, values, and more.
+                Search by multiple criteria including background, expertise, age, values, location, and more.
               </p>
             </div>
           </div>
@@ -324,19 +361,29 @@ const Connect = () => {
               {/* Filters Sidebar */}
               <div className="lg:w-1/4">
                 <div className="bg-white rounded-lg shadow p-6">
-                  <h2 className="text-xl font-medium mb-6">Filters</h2>
+                  <h2 className="text-xl font-medium mb-6">Search & Filters</h2>
                   
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-sm font-medium text-gray-700 mb-3">Search</h3>
                       <Input 
                         type="text" 
-                        placeholder="Search by name, location, etc." 
+                        placeholder="Search by name, background, education, etc." 
                         value={searchTerm}
                         onChange={handleSearch}
                       />
                     </div>
 
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-3">Location Filter</h3>
+                      <Input 
+                        type="text" 
+                        placeholder="Filter by city/state" 
+                        value={filters.location}
+                        onChange={(e) => handleLocationFilter(e.target.value)}
+                      />
+                    </div>
+                    
                     <div>
                       <h3 className="text-sm font-medium text-gray-700 mb-3">Your City (for distance)</h3>
                       <Input 
@@ -345,6 +392,22 @@ const Connect = () => {
                         value={userCity}
                         onChange={(e) => setUserCity(e.target.value)}
                       />
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-3">Background/Experience</h3>
+                      <div className="space-y-2">
+                        {['Nursing', 'Teaching', 'Psychology', 'Social Work', 'Business', 'Healthcare', 'Mental Health'].map(bg => (
+                          <div className="flex items-center" key={bg}>
+                            <Checkbox 
+                              id={`background-${bg.toLowerCase()}`} 
+                              checked={filters.background.includes(bg)}
+                              onCheckedChange={() => toggleBackgroundFilter(bg)}
+                            />
+                            <Label htmlFor={`background-${bg.toLowerCase()}`} className="ml-2">{bg}</Label>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                     
                     <div>
@@ -477,6 +540,8 @@ const Connect = () => {
                           religion: [],
                           payRange: [5, 150],
                           distanceRange: [0, 50],
+                          background: [],
+                          location: '',
                         });
                         setSearchTerm('');
                         setUserCity('');
@@ -488,10 +553,12 @@ const Connect = () => {
                           religion: [],
                           payRange: [5, 150],
                           distanceRange: [0, 50],
+                          background: [],
+                          location: '',
                         });
                       }}
                     >
-                      Reset Filters
+                      Reset All Filters
                     </Button>
                   </div>
                 </div>
