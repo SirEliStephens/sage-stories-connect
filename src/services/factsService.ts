@@ -34,6 +34,56 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
       dislikes: 25,
       bookmarks: 4,
       comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'history',
+      content: 'Napoleon was not actually short. He was 5\'7", which was average for his time.',
+      source: 'French Historical Society',
+      likes: 35,
+      dislikes: 8,
+      bookmarks: 12,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'history',
+      content: 'The Great Wall of China is not visible from space with the naked eye.',
+      source: 'Space Research Institute',
+      likes: 29,
+      dislikes: 6,
+      bookmarks: 9,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'history',
+      content: 'Vikings never wore horned helmets. This is a myth popularized by opera costumes.',
+      source: 'Norse Archaeological Studies',
+      likes: 41,
+      dislikes: 4,
+      bookmarks: 15,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'history',
+      content: 'The first computer programmer was a woman named Ada Lovelace in 1843.',
+      source: 'Computer History Museum',
+      likes: 56,
+      dislikes: 2,
+      bookmarks: 22,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'history',
+      content: 'Oxford University is older than the Aztec Empire by over 200 years.',
+      source: 'Educational History Journal',
+      likes: 38,
+      dislikes: 7,
+      bookmarks: 14,
+      comments: []
     }
   ],
   'math': [
@@ -65,6 +115,56 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
       likes: 27,
       dislikes: 3,
       bookmarks: 7,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'math',
+      content: 'The number π (pi) contains your birthday, social security number, and every possible combination of numbers.',
+      source: 'Mathematical Constants Review',
+      likes: 44,
+      dislikes: 5,
+      bookmarks: 18,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'math',
+      content: 'A googol is 1 followed by 100 zeros, while a googolplex is 1 followed by a googol zeros.',
+      source: 'Large Numbers Institute',
+      likes: 33,
+      dislikes: 4,
+      bookmarks: 11,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'math',
+      content: 'The Fibonacci sequence appears everywhere in nature, from flower petals to spiral galaxies.',
+      source: 'Natural Mathematics',
+      likes: 52,
+      dislikes: 3,
+      bookmarks: 19,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'math',
+      content: 'There are more possible games of chess than atoms in the observable universe.',
+      source: 'Game Theory Research',
+      likes: 67,
+      dislikes: 2,
+      bookmarks: 25,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'math',
+      content: 'The concept of infinity was so disturbing to ancient Greeks that they kept it secret.',
+      source: 'Ancient Mathematical Philosophy',
+      likes: 39,
+      dislikes: 8,
+      bookmarks: 13,
       comments: []
     }
   ],
@@ -98,6 +198,56 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
       dislikes: 7,
       bookmarks: 18,
       comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'science',
+      content: 'Octopuses have three hearts and blue blood.',
+      source: 'Marine Biology Journal',
+      likes: 61,
+      dislikes: 3,
+      bookmarks: 23,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'science',
+      content: 'A day on Venus is longer than its year.',
+      source: 'Planetary Science Institute',
+      likes: 45,
+      dislikes: 6,
+      bookmarks: 16,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'science',
+      content: 'Honey never spoils. Archaeologists have found edible honey in ancient Egyptian tombs.',
+      source: 'Food Science Quarterly',
+      likes: 58,
+      dislikes: 2,
+      bookmarks: 21,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'science',
+      content: 'Your body produces about 37.2 trillion cells, and you replace most of them every 7-10 years.',
+      source: 'Cell Biology Research',
+      likes: 43,
+      dislikes: 5,
+      bookmarks: 17,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'science',
+      content: 'Lightning strikes the Earth about 100 times per second.',
+      source: 'Atmospheric Physics',
+      likes: 36,
+      dislikes: 4,
+      bookmarks: 14,
+      comments: []
     }
   ],
   'chemistry': [
@@ -129,6 +279,56 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
       likes: 41,
       dislikes: 3,
       bookmarks: 14,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'chemistry',
+      content: 'Water can exist in three states simultaneously at its triple point.',
+      source: 'Physical Chemistry Review',
+      likes: 37,
+      dislikes: 5,
+      bookmarks: 12,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'chemistry',
+      content: 'Helium is the only element that was discovered in space before being found on Earth.',
+      source: 'Astronomical Chemistry',
+      likes: 49,
+      dislikes: 4,
+      bookmarks: 18,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'chemistry',
+      content: 'Glass is actually a liquid that flows extremely slowly.',
+      source: 'Materials Science Quarterly',
+      likes: 32,
+      dislikes: 9,
+      bookmarks: 10,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'chemistry',
+      content: 'Oxygen is toxic to humans in high concentrations and can cause oxygen poisoning.',
+      source: 'Respiratory Chemistry',
+      likes: 26,
+      dislikes: 7,
+      bookmarks: 9,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'chemistry',
+      content: 'The smell after rain has a name: petrichor. It comes from oils from plants and bacteria.',
+      source: 'Environmental Chemistry',
+      likes: 54,
+      dislikes: 2,
+      bookmarks: 20,
       comments: []
     }
   ],
@@ -162,6 +362,56 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
       dislikes: 4,
       bookmarks: 17,
       comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'politics',
+      content: 'The youngest elected president was John F. Kennedy at age 43.',
+      source: 'Presidential History Institute',
+      likes: 31,
+      dislikes: 6,
+      bookmarks: 11,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'politics',
+      content: 'Alaska and Hawaii became states in the same year: 1959.',
+      source: 'Statehood Records',
+      likes: 28,
+      dislikes: 3,
+      bookmarks: 8,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'politics',
+      content: 'The Vice President is the only government official mentioned in both the Constitution and as a backup.',
+      source: 'Government Structure Analysis',
+      likes: 22,
+      dislikes: 7,
+      bookmarks: 5,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'politics',
+      content: 'New Zealand was the first country to give women the right to vote in 1893.',
+      source: 'International Suffrage History',
+      likes: 41,
+      dislikes: 5,
+      bookmarks: 15,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'politics',
+      content: 'The term "filibuster" comes from Dutch word meaning "pirate".',
+      source: 'Political Etymology',
+      likes: 34,
+      dislikes: 8,
+      bookmarks: 12,
+      comments: []
     }
   ],
   'current-events': [
@@ -193,6 +443,56 @@ const mockFactsData: Record<FactCategory, Fact[]> = {
       likes: 48,
       dislikes: 2,
       bookmarks: 20,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'current-events',
+      content: 'Electric vehicle sales have grown by over 40% globally in the past year.',
+      source: 'Automotive Industry Report 2024',
+      likes: 42,
+      dislikes: 8,
+      bookmarks: 16,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'current-events',
+      content: 'Over 5 billion people now have access to the internet worldwide.',
+      source: 'Global Connectivity Statistics',
+      likes: 35,
+      dislikes: 4,
+      bookmarks: 13,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'current-events',
+      content: 'Renewable energy now accounts for over 30% of global electricity generation.',
+      source: 'International Energy Agency',
+      likes: 51,
+      dislikes: 3,
+      bookmarks: 19,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'current-events',
+      content: 'AI chatbots process over 1 billion conversations per month worldwide.',
+      source: 'AI Technology Metrics 2024',
+      likes: 39,
+      dislikes: 7,
+      bookmarks: 14,
+      comments: []
+    },
+    {
+      id: uuidv4(),
+      category: 'current-events',
+      content: 'Space tourism has become a $400 million industry with over 600 people having been to space.',
+      source: 'Commercial Space Report',
+      likes: 44,
+      dislikes: 6,
+      bookmarks: 17,
       comments: []
     }
   ]
