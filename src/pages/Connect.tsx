@@ -169,13 +169,13 @@ const Connect = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [userCity, setUserCity] = useState('');
   const [filters, setFilters] = useState({
-    ageRange: [18, 80] as [number, number],
+    ageRange: [18, 80],
     gender: [] as string[],
     education: [] as string[],
     politics: [] as string[],
     religion: [] as string[],
-    payRange: [5, 150] as [number, number],
-    distanceRange: [0, 50] as [number, number],
+    payRange: [5, 150],
+    distanceRange: [0, 50],
   });
 
   const handleTabChange = (value: string) => {
@@ -222,27 +222,24 @@ const Connect = () => {
   };
 
   const handleAgeRangeChange = (value: number[]) => {
-    const newRange: [number, number] = [value[0], value[1]];
     setFilters(prev => {
-      const updated = { ...prev, ageRange: newRange };
+      const updated = { ...prev, ageRange: value };
       applyFilters(activeTab, updated);
       return updated;
     });
   };
 
   const handlePayRangeChange = (value: number[]) => {
-    const newRange: [number, number] = [value[0], value[1]];
     setFilters(prev => {
-      const updated = { ...prev, payRange: newRange };
+      const updated = { ...prev, payRange: value };
       applyFilters(activeTab, updated);
       return updated;
     });
   };
 
   const handleDistanceRangeChange = (value: number[]) => {
-    const newRange: [number, number] = [value[0], value[1]];
     setFilters(prev => {
-      const updated = { ...prev, distanceRange: newRange };
+      const updated = { ...prev, distanceRange: value };
       applyFilters(activeTab, updated);
       return updated;
     });
