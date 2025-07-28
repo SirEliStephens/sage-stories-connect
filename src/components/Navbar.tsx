@@ -61,39 +61,6 @@ const Navbar = () => {
           >
             Connect
           </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button 
-                variant="outline" 
-                className={`${isActive('/find') ? 'text-sage-700 font-medium border-sage-500' : 'text-gray-600 border-gray-300'} hover:text-sage-700 hover:border-sage-500 transition flex items-center gap-2`}
-              >
-                Find what you are looking for
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56">
-              <DropdownMenuItem asChild>
-                <Link to="/talk-support" className="w-full cursor-pointer">
-                  Talk Support
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/care-takers" className="w-full cursor-pointer">
-                  Care Takers
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/tutors" className="w-full cursor-pointer">
-                  Tutors
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/other-services" className="w-full cursor-pointer">
-                  Other Services
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
           <Link 
             to="/about" 
             className={`${isActive('/about') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition`}
@@ -108,20 +75,23 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="hidden md:flex items-center space-x-4">
-          <Button 
-            variant="outline" 
-            className="border-sage-500 text-sage-700 hover:bg-sage-50 flex items-center gap-2"
-            onClick={() => window.location.href = '/login'}
-          >
-            <LogIn className="h-4 w-4" /> Log In
-          </Button>
-          <Button 
-            className="bg-sage-600 hover:bg-sage-700 text-white flex items-center gap-2"
-            onClick={() => window.location.href = '/signup'}
-          >
-            <UserPlus className="h-4 w-4" /> Sign Up
-          </Button>
+        <div className="hidden md:flex flex-col items-end">
+          <div className="text-sage-700 font-semibold text-lg mb-2">Find Support Here</div>
+          <div className="flex items-center space-x-4">
+            <Button 
+              variant="outline" 
+              className="border-sage-500 text-sage-700 hover:bg-sage-50 flex items-center gap-2"
+              onClick={() => window.location.href = '/login'}
+            >
+              <LogIn className="h-4 w-4" /> Log In
+            </Button>
+            <Button 
+              className="bg-sage-600 hover:bg-sage-700 text-white flex items-center gap-2"
+              onClick={() => window.location.href = '/signup'}
+            >
+              <UserPlus className="h-4 w-4" /> Sign Up
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -229,6 +199,42 @@ const Navbar = () => {
           </div>
         </div>
       )}
+      
+      {/* Support Categories Bar */}
+      <div className="hidden md:block bg-sage-50 border-b border-sage-200 py-2">
+        <div className="container-custom flex justify-center space-x-8">
+          <Link 
+            to="/care-takers" 
+            className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
+          >
+            Elderly
+          </Link>
+          <Link 
+            to="/tutors" 
+            className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
+          >
+            Youth
+          </Link>
+          <Link 
+            to="/tutors" 
+            className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
+          >
+            Tutors
+          </Link>
+          <Link 
+            to="/other-services" 
+            className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
+          >
+            Babysitting
+          </Link>
+          <Link 
+            to="/talk-support" 
+            className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
+          >
+            Support
+          </Link>
+        </div>
+      </div>
     </nav>
   );
 };
