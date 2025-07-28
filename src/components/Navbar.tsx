@@ -1,13 +1,12 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Menu, X, LogIn, UserPlus } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Menu, X, LogIn, UserPlus, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [selectedServiceType, setSelectedServiceType] = useState("talk-support");
   const location = useLocation();
 
   const toggleMenu = () => {
@@ -62,12 +61,39 @@ const Navbar = () => {
           >
             Connect
           </Link>
-          <Link 
-            to="/fun-facts" 
-            className={`${isActive('/fun-facts') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition`}
-          >
-            Fun Facts
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="outline" 
+                className={`${isActive('/find') ? 'text-sage-700 font-medium border-sage-500' : 'text-gray-600 border-gray-300'} hover:text-sage-700 hover:border-sage-500 transition flex items-center gap-2`}
+              >
+                Find what you are looking for
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-56">
+              <DropdownMenuItem asChild>
+                <Link to="/talk-support" className="w-full cursor-pointer">
+                  Talk Support
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/care-takers" className="w-full cursor-pointer">
+                  Care Takers
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/tutors" className="w-full cursor-pointer">
+                  Tutors
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/other-services" className="w-full cursor-pointer">
+                  Other Services
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link 
             to="/about" 
             className={`${isActive('/about') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition`}
@@ -106,44 +132,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Service Type Tabs */}
-      <div className="border-t border-gray-100 bg-gray-50/50">
-        <div className="container-custom py-3">
-          <Tabs 
-            value={selectedServiceType} 
-            onValueChange={setSelectedServiceType}
-            className="w-full"
-          >
-            <TabsList className="grid w-full grid-cols-4 bg-white border border-gray-200">
-              <TabsTrigger 
-                value="talk-support" 
-                className="data-[state=active]:bg-sage-600 data-[state=active]:text-white"
-              >
-                Talk Support
-              </TabsTrigger>
-              <TabsTrigger 
-                value="care-takers" 
-                className="data-[state=active]:bg-sage-600 data-[state=active]:text-white"
-              >
-                Care Takers
-              </TabsTrigger>
-              <TabsTrigger 
-                value="tutors" 
-                className="data-[state=active]:bg-sage-600 data-[state=active]:text-white"
-              >
-                Tutors
-              </TabsTrigger>
-              <TabsTrigger 
-                value="other" 
-                className="data-[state=active]:bg-sage-600 data-[state=active]:text-white"
-              >
-                Other
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
-      </div>
-
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <div className="md:hidden bg-white absolute top-16 left-0 right-0 border-b border-gray-100 shadow-md z-50">
@@ -176,13 +164,39 @@ const Navbar = () => {
             >
               Connect
             </Link>
-            <Link 
-              to="/fun-facts" 
-              className={`${isActive('/fun-facts') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Fun Facts
-            </Link>
+            <div className="px-2 py-1">
+              <span className="text-gray-600 text-sm font-medium">Find what you are looking for:</span>
+              <div className="mt-2 space-y-2">
+                <Link 
+                  to="/talk-support" 
+                  className="block text-gray-600 hover:text-sage-700 transition px-2 py-1 text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Talk Support
+                </Link>
+                <Link 
+                  to="/care-takers" 
+                  className="block text-gray-600 hover:text-sage-700 transition px-2 py-1 text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Care Takers
+                </Link>
+                <Link 
+                  to="/tutors" 
+                  className="block text-gray-600 hover:text-sage-700 transition px-2 py-1 text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Tutors
+                </Link>
+                <Link 
+                  to="/other-services" 
+                  className="block text-gray-600 hover:text-sage-700 transition px-2 py-1 text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Other Services
+                </Link>
+              </div>
+            </div>
             <Link 
               to="/about" 
               className={`${isActive('/about') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}

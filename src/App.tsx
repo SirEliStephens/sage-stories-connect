@@ -14,6 +14,10 @@ import Connect from "./pages/Connect";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import FunFacts from "./pages/FunFacts";
+import TalkSupport from "./pages/TalkSupport";
+import CareTakers from "./pages/CareTakers";
+import Tutors from "./pages/Tutors";
+import OtherServices from "./pages/OtherServices";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +37,10 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/fun-facts" element={<FunFacts />} />
+          <Route path="/talk-support" element={<TalkSupport />} />
+          <Route path="/care-takers" element={<CareTakers />} />
+          <Route path="/tutors" element={<Tutors />} />
+          <Route path="/other-services" element={<OtherServices />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
