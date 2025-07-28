@@ -1,11 +1,13 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Menu, X, LogIn, UserPlus } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedServiceType, setSelectedServiceType] = useState("talk-support");
   const location = useLocation();
 
   const toggleMenu = () => {
@@ -101,6 +103,44 @@ const Navbar = () => {
           <Button variant="ghost" size="icon" onClick={toggleMenu}>
             {isMenuOpen ? <X /> : <Menu />}
           </Button>
+        </div>
+      </div>
+
+      {/* Service Type Tabs */}
+      <div className="border-t border-gray-100 bg-gray-50/50">
+        <div className="container-custom py-3">
+          <Tabs 
+            value={selectedServiceType} 
+            onValueChange={setSelectedServiceType}
+            className="w-full"
+          >
+            <TabsList className="grid w-full grid-cols-4 bg-white border border-gray-200">
+              <TabsTrigger 
+                value="talk-support" 
+                className="data-[state=active]:bg-sage-600 data-[state=active]:text-white"
+              >
+                Talk Support
+              </TabsTrigger>
+              <TabsTrigger 
+                value="care-takers" 
+                className="data-[state=active]:bg-sage-600 data-[state=active]:text-white"
+              >
+                Care Takers
+              </TabsTrigger>
+              <TabsTrigger 
+                value="tutors" 
+                className="data-[state=active]:bg-sage-600 data-[state=active]:text-white"
+              >
+                Tutors
+              </TabsTrigger>
+              <TabsTrigger 
+                value="other" 
+                className="data-[state=active]:bg-sage-600 data-[state=active]:text-white"
+              >
+                Other
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
       </div>
 
