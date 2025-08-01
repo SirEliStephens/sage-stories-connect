@@ -397,7 +397,7 @@ const Connect = () => {
                     <div>
                       <h3 className="text-sm font-medium text-gray-700 mb-3">Background/Experience</h3>
                       <div className="space-y-2">
-                        {['Nursing', 'Teaching', 'Psychology', 'Social Work', 'Business', 'Healthcare', 'Mental Health'].map(bg => (
+                        {['Nursing', 'Teaching', 'Psychology', 'Social Work', 'Business', 'Healthcare', 'Mental Health', 'Child Care', 'Babysitting'].map(bg => (
                           <div className="flex items-center" key={bg}>
                             <Checkbox 
                               id={`background-${bg.toLowerCase()}`} 
