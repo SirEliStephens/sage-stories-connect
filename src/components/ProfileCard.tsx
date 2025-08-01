@@ -5,8 +5,16 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Calendar } from '@/components/ui/calendar';
-import { MessageCircle, Calendar as CalendarIcon } from 'lucide-react';
-import { format } from 'date-fns';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { MessageCircle, Calendar as CalendarIcon, Clock, CheckCircle } from 'lucide-react';
+import { format, addDays, isToday, isTomorrow } from 'date-fns';
+
+interface TimeSlot {
+  time: string;
+  available: boolean;
+  booked?: boolean;
+}
 
 interface ProfileCardProps {
   name: string;
@@ -28,7 +36,46 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   type
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
+  // Mock availability data - in real app this would come from backend
+  const getAvailableTimeSlots = (date: Date): TimeSlot[] => {
+    const baseSlots = [
+      { time: '9:00 AM', available: true },
+      { time: '10:00 AM', available: true },
+      { time: '11:00 AM', available: false, booked: true },
+      { time: '1:00 PM', available: true },
+      { time: '2:00 PM', available: true },
+      { time: '3:00 PM', available: false, booked: true },
+      { time: '4:00 PM', available: true },
+      { time: '5:00 PM', available: true },
+    ];
+    
+    // Simulate different availability for different days
+    if (isToday(date)) {
+      return baseSlots.map(slot => 
+        ['9:00 AM', '10:00 AM'].includes(slot.time) ? { ...slot, available: false } : slot
+      );
+    }
+    
+    return baseSlots;
+  };
+
+  const getAvailableDates = (): Date[] => {
+    // Generate available dates for the next 30 days (excluding some days)
+    const dates = [];
+    for (let i = 0; i < 30; i++) {
+      const date = addDays(new Date(), i);
+      // Skip weekends for demo purposes
+      if (date.getDay() !== 0 && date.getDay() !== 6) {
+        dates.push(date);
+      }
+    }
+    return dates;
+  };
+
+  const availableDates = getAvailableDates();
 
   const badgeColor = 
     type === 'caregiver' ? 'bg-sage-100 text-sage-800' :
@@ -43,11 +90,19 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     'Amateur Psychologist';
 
   const handleSchedule = () => {
-    if (selectedDate) {
-      console.log(`Scheduling session with ${name} on ${format(selectedDate, 'PPP')}`);
+    if (selectedDate && selectedTimeSlot) {
+      console.log(`Scheduling session with ${name} on ${format(selectedDate, 'PPP')} at ${selectedTimeSlot}`);
       setIsCalendarOpen(false);
+      setSelectedDate(undefined);
+      setSelectedTimeSlot(null);
       // Here you would typically send this to your backend
     }
+  };
+
+  const getDateDisplayText = (date: Date) => {
+    if (isToday(date)) return 'Today';
+    if (isTomorrow(date)) return 'Tomorrow';
+    return format(date, 'MMM d');
   };
     
   return (
@@ -96,40 +151,124 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           </div>
         </DialogTrigger>
         
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Schedule with {name}</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <CalendarIcon className="h-5 w-5" />
+              Schedule with {name}
+            </DialogTitle>
             <DialogDescription>
-              Choose a date to schedule your session with {name}.
+              Choose a date and time for your session with {name}.
             </DialogDescription>
           </DialogHeader>
           
-          <div className="flex flex-col items-center space-y-4">
-            <Calendar
-              mode="single"
-              selected={selectedDate}
-              onSelect={setSelectedDate}
-              disabled={(date) => date < new Date()}
-              className="rounded-md border pointer-events-auto"
-            />
-            
-            {selectedDate && (
-              <div className="text-center">
-                <p className="text-sm text-gray-600 mb-3">
-                  Selected: {format(selectedDate, 'PPPP')}
-                </p>
-                <div className="flex gap-2">
-                  <Button onClick={handleSchedule} className="bg-sage-600 hover:bg-sage-700">
-                    <CalendarIcon className="h-4 w-4 mr-2" />
-                    Schedule Session
-                  </Button>
-                  <Button variant="outline" onClick={() => setIsCalendarOpen(false)}>
-                    Cancel
-                  </Button>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Calendar Section */}
+            <div className="space-y-4">
+              <h3 className="font-medium text-sm">Select Date</h3>
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={(date) => {
+                  setSelectedDate(date);
+                  setSelectedTimeSlot(null); // Reset time slot when date changes
+                }}
+                disabled={(date) => 
+                  date < new Date() || 
+                  !availableDates.some(availableDate => 
+                    availableDate.toDateString() === date.toDateString()
+                  )
+                }
+                className="rounded-md border pointer-events-auto"
+              />
+              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 bg-primary rounded-full"></div>
+                  <span>Available</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 bg-muted rounded-full"></div>
+                  <span>Unavailable</span>
                 </div>
               </div>
-            )}
+            </div>
+
+            {/* Time Slots Section */}
+            <div className="space-y-4">
+              <h3 className="font-medium text-sm">
+                {selectedDate ? `Available Times - ${getDateDisplayText(selectedDate)}` : 'Select a date first'}
+              </h3>
+              
+              {selectedDate ? (
+                <ScrollArea className="h-64">
+                  <div className="grid grid-cols-2 gap-2">
+                    {getAvailableTimeSlots(selectedDate).map((slot) => (
+                      <Button
+                        key={slot.time}
+                        variant={selectedTimeSlot === slot.time ? "default" : "outline"}
+                        size="sm"
+                        disabled={!slot.available}
+                        onClick={() => setSelectedTimeSlot(slot.time)}
+                        className={`justify-center ${
+                          slot.booked ? 'opacity-50' : ''
+                        }`}
+                      >
+                        <Clock className="h-3 w-3 mr-1" />
+                        {slot.time}
+                        {slot.booked && <span className="ml-1 text-xs">(Booked)</span>}
+                      </Button>
+                    ))}
+                  </div>
+                </ScrollArea>
+              ) : (
+                <div className="h-64 flex items-center justify-center text-muted-foreground">
+                  <div className="text-center">
+                    <CalendarIcon className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p className="text-sm">Select a date to view available times</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* Selected Session Summary */}
+          {selectedDate && selectedTimeSlot && (
+            <div className="border-t pt-4 mt-4">
+              <div className="bg-muted/50 rounded-lg p-4">
+                <h4 className="font-medium mb-2 flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  Session Details
+                </h4>
+                <div className="space-y-1 text-sm text-muted-foreground">
+                  <p><strong>Provider:</strong> {name}</p>
+                  <p><strong>Date:</strong> {format(selectedDate, 'PPPP')}</p>
+                  <p><strong>Time:</strong> {selectedTimeSlot}</p>
+                  <p><strong>Duration:</strong> 1 hour</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-2 mt-4">
+                <Button 
+                  onClick={handleSchedule} 
+                  className="flex-1"
+                  disabled={!selectedDate || !selectedTimeSlot}
+                >
+                  <CalendarIcon className="h-4 w-4 mr-2" />
+                  Confirm Booking
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setIsCalendarOpen(false);
+                    setSelectedDate(undefined);
+                    setSelectedTimeSlot(null);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </Card>
