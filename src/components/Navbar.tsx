@@ -221,12 +221,26 @@ const Navbar = () => {
           >
             Tutors
           </Link>
-          <Link 
-            to="/childcare" 
-            className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
-          >
-            Childcare
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition flex items-center gap-1">
+                Child care services
+                <ChevronDown className="h-4 w-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-56 bg-white z-50 shadow-lg border border-sage-200">
+              <DropdownMenuItem asChild>
+                <Link to="/childcare/rbt" className="w-full cursor-pointer px-4 py-2 hover:bg-sage-50">
+                  RBT certified providers
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/childcare/students" className="w-full cursor-pointer px-4 py-2 hover:bg-sage-50">
+                  University students
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link 
             to="/other-services" 
             className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
