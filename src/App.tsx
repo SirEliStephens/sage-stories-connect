@@ -18,6 +18,7 @@ import TalkSupport from "./pages/TalkSupport";
 import CareTakers from "./pages/CareTakers";
 import Tutors from "./pages/Tutors";
 import OtherServices from "./pages/OtherServices";
+import Childcare from "./pages/Childcare";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/care-takers" element={<CareTakers />} />
           <Route path="/tutors" element={<Tutors />} />
           <Route path="/other-services" element={<OtherServices />} />
+          <Route path="/childcare" element={<Childcare />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -222,6 +222,12 @@ const Navbar = () => {
             Tutors
           </Link>
           <Link 
+            to="/childcare" 
+            className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
+          >
+            Childcare
+          </Link>
+          <Link 
             to="/other-services" 
             className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
           >
