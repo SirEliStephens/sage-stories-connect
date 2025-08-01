@@ -14,7 +14,7 @@ const Hero = () => {
             </h1>
             <p className="text-lg md:text-xl text-gray-600 max-w-prose">
               SAGE+ brings together people who need care, wisdom, and support with those who can provide it.
-              From elderly care to storytelling and mental health support.
+              Connecting care providers at all experience levels to the public for elderly care, storytelling, and mental health support.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link to="/connect">
