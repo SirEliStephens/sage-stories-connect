@@ -103,9 +103,9 @@ const formSchema = z.object({
   serviceType: z.string({
     required_error: "Please select a service type.",
   }),
-  topics: z.array(z.string()).optional(),
+  topics: z.string().optional(),
   languages: z.string().min(1, { message: "Please enter languages you speak." }),
-  personalTraits: z.array(z.string()).min(1, { message: "Select at least one personal trait." }),
+  personalTraits: z.string().min(1, { message: "Please describe your personal traits." }),
   politicalView: z.enum(["non-political", "liberal", "moderate", "conservative"]),
   politicalSlider: z.number().optional(),
   linkedinProfile: z.string().optional(),
@@ -136,9 +136,9 @@ const BecomeProvider = () => {
       expertise: "",
       credentials: "",
       serviceType: "",
-      topics: [],
+      topics: "",
       languages: "English",
-      personalTraits: [],
+      personalTraits: "",
       politicalView: "non-political",
       politicalSlider: 50,
       linkedinProfile: "",
@@ -302,7 +302,7 @@ const BecomeProvider = () => {
                         name="serviceType"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>I want to be a...</FormLabel>
+                            <FormLabel>My primary interest</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
@@ -310,6 +310,24 @@ const BecomeProvider = () => {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
+                                <SelectItem value="elderly-support">
+                                  <div className="flex items-center gap-2">
+                                    <Heart size={16} />
+                                    <span>Elderly Support</span>
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="child-care">
+                                  <div className="flex items-center gap-2">
+                                    <Heart size={16} />
+                                    <span>Child Care</span>
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="tutoring">
+                                  <div className="flex items-center gap-2">
+                                    <GraduationCap size={16} />
+                                    <span>Tutoring</span>
+                                  </div>
+                                </SelectItem>
                                 <SelectItem value="caregiver">
                                   <div className="flex items-center gap-2">
                                     <Heart size={16} />
@@ -353,54 +371,19 @@ const BecomeProvider = () => {
                     <FormField
                       control={form.control}
                       name="topics"
-                      render={() => (
+                      render={({ field }) => (
                         <FormItem>
-                          <div>
-                            <FormLabel>Topics I can help with</FormLabel>
-                            <FormDescription>
-                              Select all that apply to your expertise
-                            </FormDescription>
-                          </div>
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            {topics.map((topic) => (
-                              <FormField
-                                key={topic.id}
-                                control={form.control}
-                                name="topics"
-                                render={({ field }) => {
-                                  return (
-                                    <label
-                                      htmlFor={`topic-${topic.id}`}
-                                      className={`px-3 py-1 rounded-full text-sm cursor-pointer transition-colors ${
-                                        field.value?.includes(topic.id)
-                                          ? topic.id === 'anything' 
-                                              ? 'bg-purple-300 text-purple-900' 
-                                              : 'bg-purple-200 text-purple-800'
-                                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                      }`}
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        id={`topic-${topic.id}`}
-                                        className="sr-only"
-                                        checked={field.value?.includes(topic.id) || false}
-                                        onChange={(e) => {
-                                          const checked = e.target.checked;
-                                          const currentValues = field.value || [];
-                                          field.onChange(
-                                            checked
-                                              ? [...currentValues, topic.id]
-                                              : currentValues.filter((value) => value !== topic.id)
-                                          );
-                                        }}
-                                      />
-                                      {topic.label}
-                                    </label>
-                                  );
-                                }}
-                              />
-                            ))}
-                          </div>
+                          <FormLabel>Topics I can help with</FormLabel>
+                          <FormDescription>
+                            Type in your response describing the topics you can help with
+                          </FormDescription>
+                          <FormControl>
+                            <Textarea 
+                              placeholder="Example: Loneliness, family issues, professional guidance, anxiety, depression, grief counseling..."
+                              className="min-h-[100px]"
+                              {...field}
+                            />
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -409,52 +392,19 @@ const BecomeProvider = () => {
                     <FormField
                       control={form.control}
                       name="personalTraits"
-                      render={() => (
+                      render={({ field }) => (
                         <FormItem>
-                          <div>
-                            <FormLabel>Personal Traits</FormLabel>
-                            <FormDescription>
-                              Select traits that describe you best
-                            </FormDescription>
-                          </div>
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            {traits.map((trait) => (
-                              <FormField
-                                key={trait.id}
-                                control={form.control}
-                                name="personalTraits"
-                                render={({ field }) => {
-                                  return (
-                                    <label
-                                      htmlFor={`trait-${trait.id}`}
-                                      className={`px-3 py-1 rounded-full text-sm cursor-pointer transition-colors ${
-                                        field.value?.includes(trait.id)
-                                          ? 'bg-sage-200 text-sage-800'
-                                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                      }`}
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        id={`trait-${trait.id}`}
-                                        className="sr-only"
-                                        checked={field.value?.includes(trait.id) || false}
-                                        onChange={(e) => {
-                                          const checked = e.target.checked;
-                                          const currentValues = field.value || [];
-                                          field.onChange(
-                                            checked
-                                              ? [...currentValues, trait.id]
-                                              : currentValues.filter((value) => value !== trait.id)
-                                          );
-                                        }}
-                                      />
-                                      {trait.label}
-                                    </label>
-                                  );
-                                }}
-                              />
-                            ))}
-                          </div>
+                          <FormLabel>Personal Traits</FormLabel>
+                          <FormDescription>
+                            Type in your response describing your personal traits
+                          </FormDescription>
+                          <FormControl>
+                            <Textarea 
+                              placeholder="Example: Compassionate, understanding, patient, empathetic, genuine, passionate..."
+                              className="min-h-[100px]"
+                              {...field}
+                            />
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -768,15 +718,10 @@ const BecomeProvider = () => {
                           <span className="inline-block w-2 h-2 bg-black rounded-full"></span> Topics
                         </h4>
                         <div className="flex flex-wrap gap-2">
-                          {(form.watch('topics') || []).length > 0 ? (
-                            form.watch('topics')?.slice(0, 6).map((topicId) => {
-                              const topic = topics.find(t => t.id === topicId);
-                              return topic ? (
-                                <span key={topic.id} className={`${topic.id === 'anything' ? 'bg-purple-300 text-purple-900' : 'bg-purple-100 text-purple-800'} text-xs px-2.5 py-1 rounded-full`}>
-                                  {topic.label}
-                                </span>
-                              ) : null;
-                            })
+                          {form.watch('topics') ? (
+                            <span className="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded-full">
+                              {form.watch('topics')}
+                            </span>
                           ) : (
                             <>
                               <span className="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded-full">Loneliness</span>
@@ -833,18 +778,7 @@ const BecomeProvider = () => {
                       <div className="px-6 py-4 border-t border-gray-100">
                         <h4 className="font-medium">Personal Traits</h4>
                         <p className="text-gray-600 mt-1">
-                          {(form.watch('personalTraits') || []).length > 0 ? (
-                            form.watch('personalTraits')?.map((traitId, index, array) => {
-                              const trait = traits.find(t => t.id === traitId);
-                              return trait ? (
-                                <span key={trait.id}>
-                                  {trait.label}{index < array.length - 1 ? ", " : ""}
-                                </span>
-                              ) : null;
-                            })
-                          ) : (
-                            "Self-aware, Compassionate, Genuine, Passionate"
-                          )}
+                          {form.watch('personalTraits') || "Self-aware, Compassionate, Genuine, Passionate"}
                         </p>
                       </div>
                       
