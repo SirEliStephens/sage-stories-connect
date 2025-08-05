@@ -52,6 +52,17 @@ const countries = [
   { id: 'canada', label: 'Canada' },
   { id: 'mexico', label: 'Mexico' },
   { id: 'china', label: 'China' },
+  { id: 'israel', label: 'Israel' },
+  { id: 'brazil', label: 'Brazil' },
+  { id: 'south-africa', label: 'South Africa' },
+  { id: 'britain', label: 'Britain' },
+  { id: 'germany', label: 'Germany' },
+  { id: 'france', label: 'France' },
+  { id: 'thailand', label: 'Thailand' },
+  { id: 'australia', label: 'Australia' },
+  { id: 'japan', label: 'Japan' },
+  { id: 'taiwan', label: 'Taiwan' },
+  { id: 'russia', label: 'Russia' },
 ];
 
 // Political questionnaire questions
@@ -378,37 +389,17 @@ const BecomeProvider = () => {
                             Type in your response describing the topics you can help with
                           </FormDescription>
                           <FormControl>
-                            <Textarea 
-                              placeholder="Example: Loneliness, family issues, professional guidance, anxiety, depression, grief counseling..."
-                              className="min-h-[100px]"
-                              {...field}
-                            />
+                          <Textarea 
+                            placeholder="whatever topics related to your specialty"
+                            className="min-h-[100px]"
+                            {...field}
+                          />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                     
-                    <FormField
-                      control={form.control}
-                      name="personalTraits"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Personal Traits</FormLabel>
-                          <FormDescription>
-                            Type in your response describing your personal traits
-                          </FormDescription>
-                          <FormControl>
-                            <Textarea 
-                              placeholder="Example: Compassionate, understanding, patient, empathetic, genuine, passionate..."
-                              className="min-h-[100px]"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                     
                     {/* Countries View Favorably Section */}
                     <FormField
@@ -419,7 +410,7 @@ const BecomeProvider = () => {
                           <div>
                             <FormLabel className="flex items-center gap-2">
                               <Globe size={18} />
-                              Countries You View Favorably
+                              Country you are most loyal to
                             </FormLabel>
                             <FormDescription>
                               Select countries you have a positive view about
@@ -587,7 +578,7 @@ const BecomeProvider = () => {
                         <FormItem>
                           <FormLabel>Expertise</FormLabel>
                           <FormControl>
-                            <Input placeholder="Describe your area of expertise" {...field} />
+                            <Input placeholder="describe level of experience" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -652,7 +643,7 @@ const BecomeProvider = () => {
                             />
                           </FormControl>
                           <FormDescription>
-                            Share your story, background, and what makes you a good provider. This will be visible on your profile.
+                            Share your personal background and write as much as you are comfortable with telling. This will be visible on your profile.
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
