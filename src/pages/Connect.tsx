@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { providerService } from '@/services/providerService';
 
 // Define the provider type
 type Provider = {
@@ -163,11 +164,11 @@ const sampleProviders: Provider[] = [
 
 const Connect = () => {
   const [activeTab, setActiveTab] = useState('caregiver');
-  const [filteredProviders, setFilteredProviders] = useState<Provider[]>(
-    sampleProviders.filter(provider => provider.type === 'caregiver')
-  );
+  const [allProviders, setAllProviders] = useState<Provider[]>([]);
+  const [filteredProviders, setFilteredProviders] = useState<Provider[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [userCity, setUserCity] = useState('');
+  const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     ageRange: [18, 80],
     gender: [] as string[],
@@ -266,8 +267,65 @@ const Connect = () => {
     });
   };
 
-  const applyFilters = (tabValue: string, currentFilters = filters) => {
-    let results = sampleProviders.filter(provider => provider.type === tabValue);
+  // Load providers from Supabase on component mount
+  useEffect(() => {
+    const loadProviders = async () => {
+      try {
+        const supabaseProviders = await providerService.getProviders();
+        
+        // Convert Supabase providers to the format expected by ProfileCard
+        const formattedProviders: Provider[] = [
+          ...sampleProviders, // Keep sample data for now
+          ...supabaseProviders.map(provider => ({
+            name: provider.name,
+            role: provider.expertise,
+            age: 30, // Default age since it's not in form
+            location: provider.location || 'Location not specified',
+            image: provider.image_url || 'https://images.unsplash.com/photo-1438565434616-3ef039228b15',
+            bio: provider.biography,
+            type: mapProviderType(provider.primary_interest),
+            background: provider.expertise,
+            education: provider.education,
+            politics: provider.politics,
+            gender: provider.gender,
+            religion: provider.religion,
+            hourlyRate: provider.hourly_rate,
+            distanceFromCity: 10, // Default distance
+          }))
+        ];
+        
+        setAllProviders(formattedProviders);
+        applyFilters('caregiver', filters, formattedProviders);
+      } catch (error) {
+        console.error('Error loading providers:', error);
+        // Fallback to sample data
+        setAllProviders(sampleProviders);
+        applyFilters('caregiver', filters, sampleProviders);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadProviders();
+  }, []);
+
+  // Helper function to map provider interest to card type
+  const mapProviderType = (interest: string): 'caregiver' | 'storyteller' | 'support' | 'psychologist' => {
+    switch (interest) {
+      case 'Elderly Support':
+      case 'Child Care':
+        return 'caregiver';
+      case 'Tutoring':
+        return 'storyteller';
+      case 'Emotional Support':
+        return 'support';
+      default:
+        return 'support';
+    }
+  };
+
+  const applyFilters = (tabValue: string, currentFilters = filters, providers = allProviders) => {
+    let results = providers.filter(provider => provider.type === tabValue);
     
     // Apply search term (enhanced to search multiple fields)
     if (searchTerm) {
@@ -574,19 +632,23 @@ const Connect = () => {
                     <TabsTrigger value="psychologist">Amateur Psychologists</TabsTrigger>
                   </TabsList>
                   
-                  <TabsContent value="caregiver" className="mt-0">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {filteredProviders.length > 0 ? (
-                        filteredProviders.map((provider, index) => (
-                          <ProfileCard key={index} {...provider} />
-                        ))
-                      ) : (
-                        <div className="col-span-2 text-center py-12">
-                          <p className="text-gray-600">No caregivers found matching your criteria.</p>
-                        </div>
-                      )}
-                    </div>
-                  </TabsContent>
+                   <TabsContent value="caregiver" className="mt-0">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                       {loading ? (
+                         <div className="col-span-2 text-center py-12">
+                           <p className="text-gray-600">Loading providers...</p>
+                         </div>
+                       ) : filteredProviders.length > 0 ? (
+                         filteredProviders.map((provider, index) => (
+                           <ProfileCard key={index} {...provider} />
+                         ))
+                       ) : (
+                         <div className="col-span-2 text-center py-12">
+                           <p className="text-gray-600">No caregivers found matching your criteria.</p>
+                         </div>
+                       )}
+                     </div>
+                   </TabsContent>
                   
                   <TabsContent value="storyteller" className="mt-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

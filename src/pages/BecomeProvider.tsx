@@ -15,6 +15,8 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import { Heart, Briefcase, GraduationCap, MessageSquare, User, Globe, Flag } from 'lucide-react';
+import { providerService } from '@/services/providerService';
+import { useNavigate } from 'react-router-dom';
 
 const topics = [
   { id: 'loneliness', label: 'Loneliness' },
@@ -136,6 +138,8 @@ const BecomeProvider = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [showPoliticalSlider, setShowPoliticalSlider] = useState(false);
   const [showPoliticalQuestionnaire, setShowPoliticalQuestionnaire] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -177,14 +181,42 @@ const BecomeProvider = () => {
     setShowPoliticalQuestionnaire(value !== "non-political");
   };
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-    // Here you would typically send the data to your backend
-    toast.success("Application submitted successfully! We'll review your information and get back to you soon.");
-    // Show sample profile based on submission
-    const profilePreview = document.getElementById('profile-preview');
-    if (profilePreview) {
-      profilePreview.scrollIntoView({ behavior: 'smooth' });
+  const onSubmit = async (data: FormValues) => {
+    setIsSubmitting(true);
+    
+    try {
+      const providerData = {
+        name: data.fullName,
+        email: data.email,
+        phone: '', // You might want to add a phone field to the form
+        primary_interest: data.serviceType,
+        topics: data.topics || '',
+        country_loyalty: data.favorableCountries?.[0] || '',
+        education: data.credentials || '',
+        expertise: data.expertise,
+        location: '', // You might want to add a location field to the form  
+        biography: data.bio,
+        gender: data.gender,
+        religion: '', // You might want to add a religion field to the form
+        politics: data.politicalView,
+        hourly_rate: 25, // Default rate, you might want to add this to the form
+        type: data.serviceType as any,
+        image_url: previewImage || undefined,
+      };
+
+      const result = await providerService.createProvider(providerData);
+      
+      if (result) {
+        toast.success("Application submitted successfully! Your profile is now live on the platform.");
+        navigate('/connect');
+      } else {
+        throw new Error('Failed to create provider profile');
+      }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      toast.error("Submission failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -651,8 +683,8 @@ const BecomeProvider = () => {
                     />
                     
                     <div className="pt-4">
-                      <Button type="submit" className="w-full bg-sage-600 hover:bg-sage-700">
-                        Submit Application
+                      <Button type="submit" className="w-full bg-sage-600 hover:bg-sage-700" disabled={isSubmitting}>
+                        {isSubmitting ? 'Submitting...' : 'Submit Application'}
                       </Button>
                     </div>
                   </form>
