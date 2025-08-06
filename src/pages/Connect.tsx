@@ -20,7 +20,7 @@ type Provider = {
   location: string;
   image: string;
   bio: string;
-  type: 'caregiver' | 'storyteller' | 'support' | 'psychologist';
+  type: 'caregiver' | 'childcare' | 'storyteller' | 'tutors' | 'psychologist';
   background: string;
   education: string;
   politics: string;
@@ -71,7 +71,7 @@ const sampleProviders: Provider[] = [
     location: 'Chicago, IL',
     image: 'https://images.unsplash.com/photo-1441057206919-63d19fac2369',
     bio: 'Final year psychology student offering supportive conversation. I\'m a great listener and genuinely interested in hearing your story.',
-    type: 'support' as const,
+    type: 'tutors' as const,
     background: 'Mental Health Volunteer',
     education: 'Bachelor\'s in Psychology (in progress)',
     politics: 'Liberal',
@@ -119,7 +119,7 @@ const sampleProviders: Provider[] = [
     location: 'Boston, MA',
     image: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef',
     bio: 'Graduate student in social work offering supportive conversations and mentoring. Specialized in addiction recovery support and personal development.',
-    type: 'support' as const,
+    type: 'tutors' as const,
     background: 'Recovery Coach',
     education: 'Master\'s in Social Work (in progress)',
     politics: 'Liberal',
@@ -310,17 +310,20 @@ const Connect = () => {
   }, []);
 
   // Helper function to map provider interest to card type
-  const mapProviderType = (interest: string): 'caregiver' | 'storyteller' | 'support' | 'psychologist' => {
+  const mapProviderType = (interest: string): 'caregiver' | 'childcare' | 'storyteller' | 'tutors' | 'psychologist' => {
     switch (interest) {
       case 'Elderly Support':
-      case 'Child Care':
         return 'caregiver';
+      case 'Child Care':
+        return 'childcare';
       case 'Tutoring':
+        return 'tutors';
+      case 'Storytelling':
         return 'storyteller';
-      case 'Emotional Support':
-        return 'support';
+      case 'Psychology':
+        return 'psychologist';
       default:
-        return 'support';
+        return 'caregiver';
     }
   };
 
@@ -625,11 +628,12 @@ const Connect = () => {
               {/* Main Content */}
               <div className="lg:w-3/4">
                 <Tabs defaultValue="caregiver" className="w-full" onValueChange={handleTabChange}>
-                  <TabsList className="mb-6 bg-sage-100 grid grid-cols-4 w-full">
-                    <TabsTrigger value="caregiver">Caregivers</TabsTrigger>
-                    <TabsTrigger value="storyteller">Storytellers</TabsTrigger>
-                    <TabsTrigger value="support">Support Providers</TabsTrigger>
-                    <TabsTrigger value="psychologist">Amateur Psychologists</TabsTrigger>
+                  <TabsList className="mb-6 bg-sage-100 grid grid-cols-5 w-full">
+                    <TabsTrigger value="caregiver">Elderly Support</TabsTrigger>
+                    <TabsTrigger value="childcare">Child Support</TabsTrigger>
+                    <TabsTrigger value="storyteller">Storytelling</TabsTrigger>
+                    <TabsTrigger value="tutors">Tutors</TabsTrigger>
+                    <TabsTrigger value="psychologist">Psychology</TabsTrigger>
                   </TabsList>
                   
                    <TabsContent value="caregiver" className="mt-0">
@@ -644,7 +648,7 @@ const Connect = () => {
                          ))
                        ) : (
                          <div className="col-span-2 text-center py-12">
-                           <p className="text-gray-600">No caregivers found matching your criteria.</p>
+                           <p className="text-gray-600">No elderly support providers found matching your criteria.</p>
                          </div>
                        )}
                      </div>
@@ -658,25 +662,39 @@ const Connect = () => {
                         ))
                       ) : (
                         <div className="col-span-2 text-center py-12">
-                          <p className="text-gray-600">No storytellers found matching your criteria.</p>
+                          <p className="text-gray-600">No storytelling providers found matching your criteria.</p>
                         </div>
                       )}
                     </div>
                   </TabsContent>
                   
-                  <TabsContent value="support" className="mt-0">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {filteredProviders.length > 0 ? (
-                        filteredProviders.map((provider, index) => (
-                          <ProfileCard key={index} {...provider} />
-                        ))
-                      ) : (
-                        <div className="col-span-2 text-center py-12">
-                          <p className="text-gray-600">No support providers found matching your criteria.</p>
-                        </div>
-                      )}
-                    </div>
-                  </TabsContent>
+                   <TabsContent value="childcare" className="mt-0">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                       {filteredProviders.length > 0 ? (
+                         filteredProviders.map((provider, index) => (
+                           <ProfileCard key={index} {...provider} />
+                         ))
+                       ) : (
+                         <div className="col-span-2 text-center py-12">
+                           <p className="text-gray-600">No child support providers found matching your criteria.</p>
+                         </div>
+                       )}
+                     </div>
+                   </TabsContent>
+                   
+                   <TabsContent value="tutors" className="mt-0">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                       {filteredProviders.length > 0 ? (
+                         filteredProviders.map((provider, index) => (
+                           <ProfileCard key={index} {...provider} />
+                         ))
+                       ) : (
+                         <div className="col-span-2 text-center py-12">
+                           <p className="text-gray-600">No tutors found matching your criteria.</p>
+                         </div>
+                       )}
+                     </div>
+                   </TabsContent>
                   
                   <TabsContent value="psychologist" className="mt-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -686,7 +704,7 @@ const Connect = () => {
                         ))
                       ) : (
                         <div className="col-span-2 text-center py-12">
-                          <p className="text-gray-600">No amateur psychologists found matching your criteria.</p>
+                          <p className="text-gray-600">No psychology providers found matching your criteria.</p>
                         </div>
                       )}
                     </div>

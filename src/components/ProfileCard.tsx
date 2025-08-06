@@ -23,7 +23,7 @@ interface ProfileCardProps {
   location: string;
   image: string;
   bio: string;
-  type: 'caregiver' | 'storyteller' | 'support' | 'psychologist';
+  type: 'caregiver' | 'childcare' | 'storyteller' | 'tutors' | 'psychologist';
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
@@ -79,15 +79,17 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
   const badgeColor = 
     type === 'caregiver' ? 'bg-sage-100 text-sage-800' :
+    type === 'childcare' ? 'bg-blue-100 text-blue-800' :
     type === 'storyteller' ? 'bg-ocean-100 text-ocean-800' :
-    type === 'support' ? 'bg-amber-100 text-amber-800' :
+    type === 'tutors' ? 'bg-green-100 text-green-800' :
     'bg-purple-100 text-purple-800';
     
   const badgeText = 
-    type === 'caregiver' ? 'Caregiver' :
-    type === 'storyteller' ? 'Storyteller' :
-    type === 'support' ? 'Support Provider' :
-    'Amateur Psychologist';
+    type === 'caregiver' ? 'Elderly Support' :
+    type === 'childcare' ? 'Child Support' :
+    type === 'storyteller' ? 'Storytelling' :
+    type === 'tutors' ? 'Tutors' :
+    'Psychology';
 
   const handleSchedule = () => {
     if (selectedDate && selectedTimeSlot) {

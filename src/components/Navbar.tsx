@@ -59,7 +59,7 @@ const Navbar = () => {
             to="/connect" 
             className={`${isActive('/connect') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition`}
           >
-            Connect
+            Find a Provider
           </Link>
           <Link 
             to="/about" 
@@ -132,7 +132,7 @@ const Navbar = () => {
               className={`${isActive('/connect') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Connect
+              Find a Provider
             </Link>
             <div className="px-2 py-1">
               <span className="text-gray-600 text-sm font-medium">Find what you are looking for:</span>
@@ -213,7 +213,7 @@ const Navbar = () => {
             to="/tutors" 
             className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
           >
-            Youth
+            Story Telling
           </Link>
           <Link 
             to="/tutors" 
