@@ -9,9 +9,14 @@ const Hero = () => {
       <div className="container-custom py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight">
-              Connecting <span className="text-sage-600">Generations</span> through Meaningful Relationships
-            </h1>
+            <div className="text-center lg:text-left">
+              <p className="text-lg md:text-xl text-gray-600 mb-4">
+                Connecting people with people for a variety of needs. No middle man just connection
+              </p>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight">
+                Connecting <span className="text-sage-600">Generations</span> through Meaningful Relationships
+              </h1>
+            </div>
             <p className="text-lg md:text-xl text-gray-600 max-w-prose">
               SAGE+ brings together people who need care, wisdom, and support with those who can provide it.
               Connecting care providers at all experience levels to the public for elderly care, storytelling, and mental health support.
