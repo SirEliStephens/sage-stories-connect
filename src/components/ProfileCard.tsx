@@ -145,10 +145,22 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             <CardContent className="pb-4">
               <p className="text-gray-600 text-sm line-clamp-3">{bio}</p>
             </CardContent>
-            <CardFooter className="pt-0">
-              <Button variant="outline" className="w-full hover:border-sage-500 hover:text-sage-700 flex gap-2 items-center">
-                <MessageCircle className="h-4 w-4" /> Connect
-              </Button>
+            <CardFooter className="pt-0 space-y-2">
+              <div className="flex gap-2 w-full">
+                <Button 
+                  variant="outline" 
+                  className="flex-1 hover:border-sage-500 hover:text-sage-700 flex gap-2 items-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.location.href = '/messaging-payment';
+                  }}
+                >
+                  <MessageCircle className="h-4 w-4" /> Message
+                </Button>
+                <Button variant="outline" className="flex-1 hover:border-sage-500 hover:text-sage-700 flex gap-2 items-center">
+                  <MessageCircle className="h-4 w-4" /> Connect
+                </Button>
+              </div>
             </CardFooter>
           </div>
         </DialogTrigger>

@@ -21,6 +21,13 @@ const services = [
   },
   {
     icon: Heart,
+    title: "Mental Support",
+    description: "Talk with psychology students who offer a listening ear and supportive conversation in a non-clinical environment.",
+    color: "purple",
+    buttonText: "Get Support"
+  },
+  {
+    icon: User,
     title: "Tutors, Babysitters, and More",
     description: "Providers on this platform can serve with a variety of different services.",
     color: "accent",
@@ -40,7 +47,7 @@ const ServiceCards = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
             <Card key={index} className="border-t-4 hover:shadow-lg transition-shadow">
               <CardHeader className="pb-2">
@@ -56,6 +63,7 @@ const ServiceCards = () => {
                 <Button variant={index === 0 ? "default" : "outline"} className={`w-full ${
                   index === 0 ? "bg-sage-600 hover:bg-sage-700" : 
                   index === 1 ? "border-ocean-500 text-ocean-600 hover:bg-ocean-50" :
+                  index === 2 ? "border-purple-500 text-purple-600 hover:bg-purple-50" :
                   "border-accent text-accent-foreground hover:bg-accent/10"
                 }`}>
                   {service.buttonText}
