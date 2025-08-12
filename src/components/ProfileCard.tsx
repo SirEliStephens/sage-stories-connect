@@ -251,12 +251,15 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               
               <div className="flex gap-2 mt-4">
                 <Button 
-                  onClick={handleSchedule} 
+                  onClick={() => {
+                    // Navigate to booking page with provider details
+                    window.location.href = `/provider-booking/${name.toLowerCase().replace(/\s+/g, '-')}`;
+                  }} 
                   className="flex-1"
                   disabled={!selectedDate || !selectedTimeSlot}
                 >
                   <CalendarIcon className="h-4 w-4 mr-2" />
-                  Confirm Booking
+                  Continue to Payment
                 </Button>
                 <Button 
                   variant="outline" 

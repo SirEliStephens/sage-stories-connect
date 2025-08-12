@@ -21,10 +21,10 @@ const services = [
   },
   {
     icon: Heart,
-    title: "Psychological Support",
-    description: "Talk with psychology students who offer a listening ear and supportive conversation in a non-clinical environment.",
+    title: "Tutors, Babysitters, and More",
+    description: "Providers on this platform can serve with a variety of different services.",
     color: "accent",
-    buttonText: "Get Support"
+    buttonText: "Find Providers"
   }
 ];
 
