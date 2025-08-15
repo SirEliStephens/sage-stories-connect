@@ -67,7 +67,7 @@ const MessagingPayment = () => {
                 </div>
                 <div className="flex items-center gap-2 text-sage-700">
                   <Clock className="h-4 w-4" />
-                  <span className="text-sm">7-day access</span>
+                  <span className="text-sm">Good for 6 months</span>
                 </div>
                 <div className="flex items-center gap-2 text-sage-700">
                   <Shield className="h-4 w-4" />

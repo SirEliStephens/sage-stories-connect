@@ -16,7 +16,7 @@ const TalkSupport = () => {
               Talk Support Services
             </h1>
             <p className="text-xl text-sage-600 mb-8 max-w-3xl mx-auto">
-              Connect with compassionate listeners and mental health professionals who are here to provide emotional support and guidance.
+              Get support for all mental health problems from certified professionals, psychology students, or caring volunteers who offer a listening ear and compassionate guidance.
             </p>
             <Link to="/connect">
               <Button className="bg-sage-600 hover:bg-sage-700 text-white px-8 py-3 text-lg">
