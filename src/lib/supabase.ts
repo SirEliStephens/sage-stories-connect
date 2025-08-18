@@ -12,6 +12,7 @@ export type Database = {
         Row: {
           id: string
           created_at: string
+          updated_at: string
           name: string
           email: string
           phone: string
@@ -28,10 +29,14 @@ export type Database = {
           hourly_rate: number
           image_url?: string
           type: 'Elderly Support' | 'Child Care' | 'Tutoring' | 'Emotional Support' | 'Household Management' | 'Companion Services' | 'Professional Mentoring'
+          status: 'pending' | 'approved' | 'rejected'
+          approved_at?: string
+          admin_notes?: string
         }
         Insert: {
           id?: string
           created_at?: string
+          updated_at?: string
           name: string
           email: string
           phone: string
@@ -48,10 +53,14 @@ export type Database = {
           hourly_rate: number
           image_url?: string
           type: 'Elderly Support' | 'Child Care' | 'Tutoring' | 'Emotional Support' | 'Household Management' | 'Companion Services' | 'Professional Mentoring'
+          status?: 'pending' | 'approved' | 'rejected'
+          approved_at?: string
+          admin_notes?: string
         }
         Update: {
           id?: string
           created_at?: string
+          updated_at?: string
           name?: string
           email?: string
           phone?: string
@@ -68,6 +77,9 @@ export type Database = {
           hourly_rate?: number
           image_url?: string
           type?: 'Elderly Support' | 'Child Care' | 'Tutoring' | 'Emotional Support' | 'Household Management' | 'Companion Services' | 'Professional Mentoring'
+          status?: 'pending' | 'approved' | 'rejected'
+          approved_at?: string
+          admin_notes?: string
         }
       }
     }
