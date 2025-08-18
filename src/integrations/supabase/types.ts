@@ -41,6 +41,81 @@ export type Database = {
         }
         Relationships: []
       }
+      providers: {
+        Row: {
+          admin_notes: string | null
+          approved_at: string | null
+          biography: string
+          country_loyalty: string
+          created_at: string
+          education: string
+          email: string
+          expertise: string
+          gender: string
+          hourly_rate: number
+          id: string
+          image_url: string | null
+          location: string
+          name: string
+          phone: string
+          politics: string
+          primary_interest: string
+          religion: string
+          status: string
+          topics: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          approved_at?: string | null
+          biography: string
+          country_loyalty: string
+          created_at?: string
+          education: string
+          email: string
+          expertise: string
+          gender: string
+          hourly_rate: number
+          id?: string
+          image_url?: string | null
+          location: string
+          name: string
+          phone: string
+          politics: string
+          primary_interest: string
+          religion: string
+          status?: string
+          topics: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          approved_at?: string | null
+          biography?: string
+          country_loyalty?: string
+          created_at?: string
+          education?: string
+          email?: string
+          expertise?: string
+          gender?: string
+          hourly_rate?: number
+          id?: string
+          image_url?: string | null
+          location?: string
+          name?: string
+          phone?: string
+          politics?: string
+          primary_interest?: string
+          religion?: string
+          status?: string
+          topics?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
