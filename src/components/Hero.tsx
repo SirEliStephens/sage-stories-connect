@@ -10,10 +10,7 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col space-y-6">
             <div className="text-center lg:text-left">
-              <p className="text-lg md:text-xl text-gray-600 mb-4">
-                Connecting people with people for a variety of needs. No middle man just connection
-              </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight">
                 Connecting <span className="text-sage-600">Generations</span> and People through Meaningful Relationships. Removing the Middleman and Reducing the Cost
               </h1>
             </div>
