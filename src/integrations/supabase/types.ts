@@ -142,6 +142,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_public_providers: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          biography: string
+          created_at: string
+          expertise: string
+          hourly_rate: number
+          id: string
+          image_url: string
+          name: string
+          primary_interest: string
+          topics: string
+          type: string
+          updated_at: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
