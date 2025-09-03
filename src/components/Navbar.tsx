@@ -204,6 +204,12 @@ const Navbar = () => {
       <div className="hidden md:block bg-sage-50 border-b border-sage-200 py-2">
         <div className="container-custom flex justify-center space-x-8">
           <Link 
+            to="/talk-support" 
+            className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
+          >
+            Mental Support
+          </Link>
+          <Link 
             to="/care-takers" 
             className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
           >
@@ -248,10 +254,10 @@ const Navbar = () => {
             Babysitting
           </Link>
           <Link 
-            to="/talk-support" 
+            to="/other-services" 
             className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
           >
-            Support
+            Other
           </Link>
         </div>
       </div>
