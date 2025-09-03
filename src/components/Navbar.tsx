@@ -230,11 +230,11 @@ const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition flex items-center gap-1">
-                Child care services
+                Child care/babysitting services
                 <ChevronDown className="h-4 w-4" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56 bg-white z-50 shadow-lg border border-sage-200">
+            <DropdownMenuContent align="start" className="w-64 bg-white z-50 shadow-lg border border-sage-200">
               <DropdownMenuItem asChild>
                 <Link to="/childcare/rbt" className="w-full cursor-pointer px-4 py-2 hover:bg-sage-50">
                   RBT certified providers
@@ -245,14 +245,13 @@ const Navbar = () => {
                   University students
                 </Link>
               </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/babysitters" className="w-full cursor-pointer px-4 py-2 hover:bg-sage-50">
+                  Babysitting services
+                </Link>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Link 
-            to="/other-services" 
-            className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
-          >
-            Babysitting
-          </Link>
           <Link 
             to="/other-services" 
             className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
