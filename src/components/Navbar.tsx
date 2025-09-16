@@ -216,7 +216,7 @@ const Navbar = () => {
             Elderly
           </Link>
           <Link 
-            to="/tutors" 
+            to="/story-telling" 
             className="text-sage-700 hover:text-sage-900 font-medium px-4 py-2 rounded-md hover:bg-sage-100 transition"
           >
             Story Telling

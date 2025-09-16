@@ -17,6 +17,7 @@ import FunFacts from "./pages/FunFacts";
 import TalkSupport from "./pages/TalkSupport";
 import CareTakers from "./pages/CareTakers";
 import Tutors from "./pages/Tutors";
+import StoryTelling from "./pages/StoryTelling";
 import OtherServices from "./pages/OtherServices";
 import Childcare from "./pages/Childcare";
 import Babysitters from "./pages/Babysitters";
@@ -46,6 +47,7 @@ const App = () => (
           <Route path="/talk-support" element={<TalkSupport />} />
           <Route path="/care-takers" element={<CareTakers />} />
           <Route path="/tutors" element={<Tutors />} />
+          <Route path="/story-telling" element={<StoryTelling />} />
           <Route path="/other-services" element={<OtherServices />} />
           <Route path="/childcare" element={<Childcare />} />
           <Route path="/babysitters" element={<Babysitters />} />
