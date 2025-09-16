@@ -32,41 +32,29 @@ const StoryTelling = () => {
             <h2 className="text-3xl font-bold text-center text-sage-800 mb-12">
               Story Telling Services Available
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-md border border-sage-100">
-                <h3 className="text-xl font-semibold text-sage-800 mb-4">Children's Story Time</h3>
+                <h3 className="text-xl font-semibold text-sage-800 mb-4">Survivors of Historic Events</h3>
                 <p className="text-gray-600">
-                  Interactive storytelling sessions that captivate young minds and foster imagination and language development.
+                  Share powerful stories of resilience, survival, and historical experiences that educate and inspire future generations.
                 </p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md border border-sage-100">
-                <h3 className="text-xl font-semibold text-sage-800 mb-4">Therapeutic Storytelling</h3>
+                <h3 className="text-xl font-semibold text-sage-800 mb-4">Comedy</h3>
                 <p className="text-gray-600">
-                  Healing through narrative - using stories to help process emotions, trauma, and life experiences.
+                  Entertaining storytelling that brings laughter and joy through humorous anecdotes, funny tales, and comedic narratives.
                 </p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md border border-sage-100">
-                <h3 className="text-xl font-semibold text-sage-800 mb-4">Cultural & Traditional Tales</h3>
+                <h3 className="text-xl font-semibold text-sage-800 mb-4">People on the Street</h3>
                 <p className="text-gray-600">
-                  Preserve and share cultural heritage through traditional folk tales, legends, and family stories.
+                  Real-life stories from everyday people, sharing authentic experiences and perspectives from diverse walks of life.
                 </p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md border border-sage-100">
-                <h3 className="text-xl font-semibold text-sage-800 mb-4">Educational Storytelling</h3>
+                <h3 className="text-xl font-semibold text-sage-800 mb-4">Motivational</h3>
                 <p className="text-gray-600">
-                  Learning through stories - making complex topics accessible and memorable through narrative.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md border border-sage-100">
-                <h3 className="text-xl font-semibold text-sage-800 mb-4">Digital Storytelling</h3>
-                <p className="text-gray-600">
-                  Modern storytelling using multimedia, interactive elements, and digital platforms.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md border border-sage-100">
-                <h3 className="text-xl font-semibold text-sage-800 mb-4">Corporate Storytelling</h3>
-                <p className="text-gray-600">
-                  Business storytelling for presentations, training, and organizational communication.
+                  Inspiring storytelling that empowers and motivates through tales of triumph, personal growth, and overcoming challenges.
                 </p>
               </div>
             </div>
