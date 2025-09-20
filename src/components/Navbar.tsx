@@ -140,6 +140,13 @@ const Navbar = () => {
             >
               Find a Provider
             </Link>
+            <Link 
+              to="/admin/providers" 
+              className={`${isActive('/admin/providers') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition px-2 py-1`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Admin
+            </Link>
             <div className="px-2 py-1">
               <span className="text-gray-600 text-sm font-medium">Find what you are looking for:</span>
               <div className="mt-2 space-y-2">
