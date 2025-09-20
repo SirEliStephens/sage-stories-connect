@@ -202,12 +202,13 @@ const BecomeProvider = () => {
         hourly_rate: 25, // Default rate, you might want to add this to the form
         type: data.serviceType as any,
         image_url: previewImage || undefined,
+        status: 'pending' as const, // Required for RLS policy
       };
 
       const result = await providerService.createProvider(providerData);
       
       if (result) {
-        toast.success("Application submitted successfully! Your profile is now live on the platform.");
+        toast.success("Application submitted successfully! We'll review it and get back to you soon.");
         navigate('/connect');
       } else {
         throw new Error('Failed to create provider profile');
