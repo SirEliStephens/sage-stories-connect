@@ -8,6 +8,8 @@ type ProviderUpdate = Database['public']['Tables']['providers']['Update']
 export const providerService = {
   async createProvider(providerData: ProviderInsert): Promise<Provider | null> {
     try {
+      console.log('Attempting to create provider with data:', providerData);
+      
       const { data, error } = await supabase
         .from('providers')
         .insert([providerData])
@@ -15,10 +17,11 @@ export const providerService = {
         .single()
 
       if (error) {
-        console.error('Error creating provider:', error)
+        console.error('Supabase error creating provider:', error)
         throw error
       }
 
+      console.log('Provider created successfully:', data);
       return data
     } catch (error) {
       console.error('Provider creation failed:', error)

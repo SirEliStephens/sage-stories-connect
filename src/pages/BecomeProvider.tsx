@@ -185,6 +185,8 @@ const BecomeProvider = () => {
     setIsSubmitting(true);
     
     try {
+      console.log('Form data:', data);
+      
       const providerData = {
         name: data.fullName,
         email: data.email,
@@ -205,7 +207,9 @@ const BecomeProvider = () => {
         status: 'pending' as const, // Required for RLS policy
       };
 
+      console.log('Provider data being submitted:', providerData);
       const result = await providerService.createProvider(providerData);
+      console.log('Create provider result:', result);
       
       if (result) {
         toast.success("Application submitted successfully! We'll review it and get back to you soon.");
