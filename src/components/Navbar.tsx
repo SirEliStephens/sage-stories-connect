@@ -236,6 +236,11 @@ const Navbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-64 bg-white z-50 shadow-lg border border-sage-200">
               <DropdownMenuItem asChild>
+                <Link to="/childcare" className="w-full cursor-pointer px-4 py-2 hover:bg-sage-50 font-medium border-b border-sage-100">
+                  General Childcare Services
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link to="/childcare/rbt" className="w-full cursor-pointer px-4 py-2 hover:bg-sage-50">
                   RBT certified providers
                 </Link>
