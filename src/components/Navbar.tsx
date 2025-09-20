@@ -62,6 +62,12 @@ const Navbar = () => {
             Find a Provider
           </Link>
           <Link 
+            to="/admin/providers" 
+            className={`${isActive('/admin/providers') ? 'text-sage-700 font-medium' : 'text-gray-600'} hover:text-sage-700 transition`}
+          >
+            Admin
+          </Link>
+          <Link 
             to="/about" 
             className={`${isActive('/about') ? 'text-sage-700' : 'text-gray-600'} hover:text-sage-700 transition`}
           >
