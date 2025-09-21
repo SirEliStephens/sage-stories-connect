@@ -14,7 +14,7 @@ import { Slider } from '@/components/ui/slider';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
-import { Heart, Briefcase, GraduationCap, MessageSquare, User, Globe, Flag } from 'lucide-react';
+import { Heart, Briefcase, GraduationCap, MessageSquare, User } from 'lucide-react';
 import { providerService } from '@/services/providerService';
 import { useNavigate } from 'react-router-dom';
 
@@ -49,60 +49,7 @@ const traits = [
   { id: 'non-judgmental', label: 'Non-judgmental' },
 ];
 
-const countries = [
-  { id: 'america', label: 'America' },
-  { id: 'canada', label: 'Canada' },
-  { id: 'mexico', label: 'Mexico' },
-  { id: 'china', label: 'China' },
-  { id: 'israel', label: 'Israel' },
-  { id: 'brazil', label: 'Brazil' },
-  { id: 'south-africa', label: 'South Africa' },
-  { id: 'britain', label: 'Britain' },
-  { id: 'germany', label: 'Germany' },
-  { id: 'france', label: 'France' },
-  { id: 'thailand', label: 'Thailand' },
-  { id: 'australia', label: 'Australia' },
-  { id: 'japan', label: 'Japan' },
-  { id: 'taiwan', label: 'Taiwan' },
-  { id: 'russia', label: 'Russia' },
-];
 
-// Political questionnaire questions
-const politicalQuestions = [
-  {
-    id: 'trans-hormones',
-    question: 'Should parents give hormone supplements to their kids to become transgender?',
-    options: [
-      { value: 'strongly-agree', label: 'Strongly Agree' },
-      { value: 'agree', label: 'Agree' },
-      { value: 'neutral', label: 'Neutral' },
-      { value: 'disagree', label: 'Disagree' },
-      { value: 'strongly-disagree', label: 'Strongly Disagree' },
-    ]
-  },
-  {
-    id: 'gun-rights',
-    question: 'Do you believe in stricter gun control laws?',
-    options: [
-      { value: 'strongly-agree', label: 'Strongly Agree' },
-      { value: 'agree', label: 'Agree' },
-      { value: 'neutral', label: 'Neutral' },
-      { value: 'disagree', label: 'Disagree' },
-      { value: 'strongly-disagree', label: 'Strongly Disagree' },
-    ]
-  },
-  {
-    id: 'healthcare',
-    question: 'Should healthcare be provided by the government for all citizens?',
-    options: [
-      { value: 'strongly-agree', label: 'Strongly Agree' },
-      { value: 'agree', label: 'Agree' },
-      { value: 'neutral', label: 'Neutral' },
-      { value: 'disagree', label: 'Disagree' },
-      { value: 'strongly-disagree', label: 'Strongly Disagree' },
-    ]
-  }
-];
 
 const formSchema = z.object({
   fullName: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -119,8 +66,7 @@ const formSchema = z.object({
   topics: z.string().optional(),
   languages: z.string().min(1, { message: "Please enter languages you speak." }),
   personalTraits: z.string().min(1, { message: "Please describe your personal traits." }),
-  politicalView: z.enum(["non-political", "liberal", "moderate", "conservative"]),
-  politicalSlider: z.number().optional(),
+  politicalPreference: z.string().min(1, { message: "Please select your political preference." }),
   linkedinProfile: z.string().optional(),
   otherSocialMedia: z.string().optional(),
   bio: z.string().min(50, { message: "Bio should be at least 50 characters." }),
@@ -128,16 +74,12 @@ const formSchema = z.object({
     .refine(files => !files || files.length === 0 || (files.length === 1 && files[0].type.startsWith('image/')), {
       message: "Profile image must be a valid image file.",
     }),
-  favorableCountries: z.array(z.string()).optional(),
-  politicalQuestions: z.record(z.string(), z.string()).optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 const BecomeProvider = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [showPoliticalSlider, setShowPoliticalSlider] = useState(false);
-  const [showPoliticalQuestionnaire, setShowPoliticalQuestionnaire] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   
@@ -154,13 +96,10 @@ const BecomeProvider = () => {
       topics: "",
       languages: "English",
       personalTraits: "",
-      politicalView: "non-political",
-      politicalSlider: 50,
+      politicalPreference: "",
       linkedinProfile: "",
       otherSocialMedia: "",
       bio: "",
-      favorableCountries: [],
-      politicalQuestions: {},
     },
   });
 
@@ -175,11 +114,6 @@ const BecomeProvider = () => {
     }
   };
 
-  const handlePoliticalViewChange = (value: string) => {
-    form.setValue("politicalView", value as "non-political" | "liberal" | "moderate" | "conservative");
-    setShowPoliticalSlider(value !== "non-political");
-    setShowPoliticalQuestionnaire(value !== "non-political");
-  };
 
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
@@ -193,14 +127,13 @@ const BecomeProvider = () => {
         phone: '', // You might want to add a phone field to the form
         primary_interest: data.serviceType,
         topics: data.topics || '',
-        country_loyalty: data.favorableCountries?.[0] || '',
         education: data.credentials || '',
         expertise: data.expertise,
         location: '', // You might want to add a location field to the form  
         biography: data.bio,
         gender: data.gender,
         religion: '', // You might want to add a religion field to the form
-        politics: data.politicalView,
+        politics: data.politicalPreference,
         hourly_rate: 25, // Default rate, you might want to add this to the form
         type: data.serviceType as any,
         image_url: previewImage || undefined,
@@ -436,178 +369,62 @@ const BecomeProvider = () => {
                         </FormItem>
                       )}
                     />
-                    
-                    
-                    {/* Countries View Favorably Section */}
-                    <FormField
-                      control={form.control}
-                      name="favorableCountries"
-                      render={() => (
-                        <FormItem>
-                          <div>
-                            <FormLabel className="flex items-center gap-2">
-                              <Globe size={18} />
-                              Country you are most loyal to
-                            </FormLabel>
-                            <FormDescription>
-                              Select countries you have a positive view about
-                            </FormDescription>
-                          </div>
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            {countries.map((country) => (
-                              <FormField
-                                key={country.id}
-                                control={form.control}
-                                name="favorableCountries"
-                                render={({ field }) => {
-                                  return (
-                                    <label
-                                      htmlFor={`country-${country.id}`}
-                                      className={`px-3 py-1 rounded-full text-sm cursor-pointer transition-colors flex items-center gap-1 ${
-                                        field.value?.includes(country.id)
-                                          ? 'bg-blue-200 text-blue-800'
-                                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                      }`}
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        id={`country-${country.id}`}
-                                        className="sr-only"
-                                        checked={field.value?.includes(country.id) || false}
-                                        onChange={(e) => {
-                                          const checked = e.target.checked;
-                                          const currentValues = field.value || [];
-                                          field.onChange(
-                                            checked
-                                              ? [...currentValues, country.id]
-                                              : currentValues.filter((value) => value !== country.id)
-                                          );
-                                        }}
-                                      />
-                                      <Flag size={14} />
-                                      <span>{country.label}</span>
-                                    </label>
-                                  );
-                                }}
-                              />
-                            ))}
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="politicalView"
-                      render={({ field }) => (
-                        <FormItem className="space-y-3">
-                          <FormLabel>Political Views</FormLabel>
-                          <FormControl>
-                            <RadioGroup
-                              onValueChange={(value) => handlePoliticalViewChange(value)}
-                              defaultValue={field.value}
-                              className="flex flex-col space-y-1"
-                            >
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="non-political" id="non-political" />
-                                <label htmlFor="non-political" className="text-sm font-medium">
-                                  Non-political
-                                </label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="liberal" id="liberal" />
-                                <label htmlFor="liberal" className="text-sm font-medium">
-                                  Liberal
-                                </label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="moderate" id="moderate" />
-                                <label htmlFor="moderate" className="text-sm font-medium">
-                                  Moderate
-                                </label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="conservative" id="conservative" />
-                                <label htmlFor="conservative" className="text-sm font-medium">
-                                  Conservative
-                                </label>
-                              </div>
-                            </RadioGroup>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    {showPoliticalSlider && (
-                      <FormField
-                        control={form.control}
-                        name="politicalSlider"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Political spectrum</FormLabel>
-                            <FormControl>
-                              <div className="space-y-4">
-                                <Slider
-                                  min={0}
-                                  max={100}
-                                  step={1}
-                                  defaultValue={[field.value || 50]}
-                                  onValueChange={(values) => field.onChange(values[0])}
-                                  className="w-full"
-                                />
-                                <div className="flex justify-between text-sm text-gray-500">
-                                  <span>More progressive</span>
-                                  <span>More conservative</span>
-                                </div>
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-                    
-                    {/* Political Questionnaire Section */}
-                    {showPoliticalQuestionnaire && (
-                      <div className="space-y-6 border rounded-lg p-4 bg-gray-50">
-                        <h3 className="text-lg font-medium">Political Questionnaire</h3>
-                        <p className="text-sm text-gray-600">Please share your stance on the following issues:</p>
-                        
-                        {politicalQuestions.map((question) => (
-                          <div key={question.id} className="space-y-3">
-                            <h4 className="font-medium text-sm">{question.question}</h4>
-                            <FormField
-                              control={form.control}
-                              name={`politicalQuestions.${question.id}` as any}
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <RadioGroup
-                                      onValueChange={field.onChange}
-                                      defaultValue={field.value}
-                                      className="flex flex-col space-y-1"
-                                    >
-                                      {question.options.map((option) => (
-                                        <div key={option.value} className="flex items-center space-x-2">
-                                          <RadioGroupItem value={option.value} id={`${question.id}-${option.value}`} />
-                                          <label htmlFor={`${question.id}-${option.value}`} className="text-sm">
-                                            {option.label}
-                                          </label>
-                                        </div>
-                                      ))}
-                                    </RadioGroup>
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    
+                     
+                     {/* Political Preference Section */}
+                     <FormField
+                       control={form.control}
+                       name="politicalPreference"
+                       render={({ field }) => (
+                         <FormItem className="space-y-3">
+                           <FormLabel>Political Preference</FormLabel>
+                           <FormControl>
+                             <RadioGroup
+                               onValueChange={field.onChange}
+                               value={field.value}
+                               className="flex flex-col space-y-1"
+                             >
+                               <div className="flex items-center space-x-2">
+                                 <RadioGroupItem value="non-political" id="non-political" />
+                                 <label htmlFor="non-political" className="text-sm font-medium">
+                                   Non-political
+                                 </label>
+                               </div>
+                               <div className="flex items-center space-x-2">
+                                 <RadioGroupItem value="liberal" id="liberal" />
+                                 <label htmlFor="liberal" className="text-sm font-medium">
+                                   Liberal
+                                 </label>
+                               </div>
+                               <div className="flex items-center space-x-2">
+                                 <RadioGroupItem value="moderate" id="moderate" />
+                                 <label htmlFor="moderate" className="text-sm font-medium">
+                                   Moderate
+                                 </label>
+                               </div>
+                               <div className="flex items-center space-x-2">
+                                 <RadioGroupItem value="conservative" id="conservative" />
+                                 <label htmlFor="conservative" className="text-sm font-medium">
+                                   Conservative
+                                 </label>
+                               </div>
+                               <div className="flex items-center space-x-2">
+                                 <RadioGroupItem value="progressive" id="progressive" />
+                                 <label htmlFor="progressive" className="text-sm font-medium">
+                                   Progressive
+                                 </label>
+                               </div>
+                               <div className="flex items-center space-x-2">
+                                 <RadioGroupItem value="libertarian" id="libertarian" />
+                                 <label htmlFor="libertarian" className="text-sm font-medium">
+                                   Libertarian
+                                 </label>
+                               </div>
+                             </RadioGroup>
+                           </FormControl>
+                           <FormMessage />
+                         </FormItem>
+                       )}
+                     />
                     <FormField
                       control={form.control}
                       name="expertise"
@@ -782,25 +599,11 @@ const BecomeProvider = () => {
                         <p className="text-gray-600 mt-1">{form.watch('languages') || "English"}</p>
                       </div>
 
-                      {/* Countries */}
-                      {form.watch('favorableCountries')?.length ? (
-                        <div className="px-6 py-4 border-t border-gray-100">
-                          <h4 className="flex items-center gap-2 font-medium">
-                            <Globe size={16} /> Favorable Countries
-                          </h4>
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            {form.watch('favorableCountries')?.map((countryId) => {
-                              const country = countries.find(c => c.id === countryId);
-                              return country ? (
-                                <span key={country.id} className="inline-flex items-center gap-1 text-xs bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full">
-                                  <Flag size={12} />
-                                  {country.label}
-                                </span>
-                              ) : null;
-                            })}
-                          </div>
-                        </div>
-                      ) : null}
+                      {/* Political Preference */}
+                      <div className="px-6 py-4 border-t border-gray-100">
+                        <h4 className="font-medium">Political Preference</h4>
+                        <p className="text-gray-600 mt-1">{form.watch('politicalPreference') || "Not specified"}</p>
+                      </div>
                       
                       {/* Personal Traits */}
                       <div className="px-6 py-4 border-t border-gray-100">
