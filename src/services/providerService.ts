@@ -28,18 +28,41 @@ export const providerService = {
   },
   async getProviders(): Promise<Provider[]> {
     try {
-      const { data, error } = await supabase
-        .from('providers')
-        .select('*')
-        .eq('status', 'approved')
-        .order('created_at', { ascending: false })
+      // Use SECURITY DEFINER function so approved providers are publicly visible
+      const { data, error } = await supabase.rpc('get_public_providers')
 
       if (error) {
-        console.error('Error fetching providers:', error)
+        console.error('Error fetching providers via RPC:', error)
         throw error
       }
 
-      return data || []
+      // Map RPC result to full Provider shape with safe fallbacks
+      const mapped = (data || []).map((p: any) => ({
+        id: p.id,
+        created_at: p.created_at,
+        updated_at: p.updated_at,
+        approved_at: null,
+        status: 'approved',
+        name: p.name,
+        email: '',
+        phone: '',
+        hourly_rate: p.hourly_rate,
+        gender: '',
+        religion: '',
+        politics: '',
+        image_url: p.image_url || null,
+        type: p.type,
+        primary_interest: p.primary_interest,
+        topics: p.topics || '',
+        country_loyalty: '',
+        education: '',
+        expertise: p.expertise || '',
+        location: '',
+        biography: p.biography || '',
+        admin_notes: null,
+      })) as Provider[]
+
+      return mapped
     } catch (error) {
       console.error('Failed to fetch providers:', error)
       return []
