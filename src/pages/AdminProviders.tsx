@@ -254,7 +254,10 @@ export default function AdminProviders() {
             <div className="bg-white rounded-lg shadow-sm border p-6">
               <h2 className="text-xl font-semibold mb-4">Pending Applications</h2>
               {pendingProviders.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">No pending applications</p>
+                <div className="text-gray-500 text-center py-8 space-y-2">
+                  <p>No pending applications</p>
+                  <p className="text-sm">If you recently submitted, you must be signed in as an admin to view and approve pending applications. <a href="/login" className="underline">Sign in</a></p>
+                </div>
               ) : (
                 <div className="space-y-6">
                   {pendingProviders.map((provider) => (

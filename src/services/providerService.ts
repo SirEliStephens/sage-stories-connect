@@ -6,29 +6,26 @@ type ProviderInsert = Database['public']['Tables']['providers']['Insert']
 type ProviderUpdate = Database['public']['Tables']['providers']['Update']
 
 export const providerService = {
-  async createProvider(providerData: ProviderInsert): Promise<Provider | null> {
+  async createProvider(providerData: ProviderInsert): Promise<boolean> {
     try {
       console.log('Attempting to create provider with data:', providerData);
       
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('providers')
-        .insert([providerData])
-        .select()
-        .single()
-
+        .insert(providerData)
+      
       if (error) {
         console.error('Supabase error creating provider:', error)
         throw error
       }
 
-      console.log('Provider created successfully:', data);
-      return data
+      console.log('Provider created successfully (no row returned due to RLS).');
+      return true
     } catch (error) {
       console.error('Provider creation failed:', error)
-      return null
+      return false
     }
   },
-
   async getProviders(): Promise<Provider[]> {
     try {
       const { data, error } = await supabase
