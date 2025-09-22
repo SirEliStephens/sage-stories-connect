@@ -12,13 +12,13 @@ const Childcare = () => {
       
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-sage-700 mb-4">Childcare Services</h1>
+          <h1 className="text-4xl font-bold text-sage-700 mb-4">Child Care & Babysitting Services</h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Professional childcare services provided by qualified and caring individuals
+            Comprehensive childcare services provided by qualified and caring individuals to meet all your family's needs
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
           {/* RBT Certified Section */}
           <Card className="border-sage-200 shadow-lg hover:shadow-xl transition-shadow">
             <CardHeader className="bg-sage-50">
@@ -82,6 +82,74 @@ const Childcare = () => {
                 </div>
                 <Button className="w-full bg-ocean-600 hover:bg-ocean-700 text-white">
                   Connect with Student Caregivers
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* General Childcare Services Section */}
+          <Card className="border-purple-200 shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-purple-50">
+              <div className="flex items-center gap-3 mb-2">
+                <Heart className="h-8 w-8 text-purple-600" />
+                <CardTitle className="text-2xl text-purple-700">General Childcare Services</CardTitle>
+              </div>
+              <CardDescription className="text-lg">
+                Comprehensive childcare for all your family's needs
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <Clock className="h-5 w-5 text-purple-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-purple-700 mb-1">Flexible Care Options</h4>
+                    <p className="text-gray-600">Full-time, part-time, and occasional childcare services to fit your schedule</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Award className="h-5 w-5 text-purple-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-purple-700 mb-1">Experienced Caregivers</h4>
+                    <p className="text-gray-600">Professional childcare providers with extensive experience in child development</p>
+                  </div>
+                </div>
+                <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                  Find General Caregivers
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Babysitting Services Section */}
+          <Card className="border-pink-200 shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-pink-50">
+              <div className="flex items-center gap-3 mb-2">
+                <Heart className="h-8 w-8 text-pink-600" />
+                <CardTitle className="text-2xl text-pink-700">Babysitting Services</CardTitle>
+              </div>
+              <CardDescription className="text-lg">
+                Occasional and on-demand babysitting services
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <Clock className="h-5 w-5 text-pink-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-pink-700 mb-1">Last-Minute Availability</h4>
+                    <p className="text-gray-600">Reliable babysitters available for date nights, events, and emergency care</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <GraduationCap className="h-5 w-5 text-pink-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-pink-700 mb-1">Trusted Sitters</h4>
+                    <p className="text-gray-600">Background-checked babysitters with references and childcare experience</p>
+                  </div>
+                </div>
+                <Button className="w-full bg-pink-600 hover:bg-pink-700 text-white">
+                  Find Babysitters
                 </Button>
               </div>
             </CardContent>
